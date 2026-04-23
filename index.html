@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Servant Leadership 2.0 Toolbox</title>
+    <link rel="stylesheet" href="./styles.css?v=2026-04-23-4" />
+  </head>
+  <body>
+    <div class="top-accent" aria-hidden="true"></div>
+
+    <header class="site-header">
+      <div class="brand-bar">
+        <div class="brand-lockup">
+          <img
+            class="brand-wordmark"
+            src="https://mediaportal.scania.com/content/dam/brand-identity/pages/brand-elements/logotype/download-wordmark.svg"
+            alt="Scania wordmark"
+          />
+          <div class="brand-divider" aria-hidden="true"></div>
+          <div class="brand-copy">
+            <p class="eyebrow">Servant Leadership 2.0</p>
+            <h1>Tool Finder</h1>
+            <p class="hero-text">
+              Search one shared catalog that combines Servant Leadership
+              practices and the full Liberating Structures exercise set.
+            </p>
+          </div>
+        </div>
+
+      </div>
+    </header>
+
+    <main class="main-shell">
+      <section class="manifesto-section" aria-label="Servant leadership manifesto">
+        <figure class="manifesto-figure">
+          <img
+            class="manifesto-image"
+            src="./manifesto.jpg"
+            alt="We are all servant leaders manifesto with eight colored servant leadership principles around the Scania leadership model."
+          />
+        </figure>
+      </section>
+
+      <section class="finder-panel" id="toolbox">
+        <div class="finder-head">
+          <div>
+            <p class="eyebrow">Finder</p>
+            <h2>Find the right exercise or leadership practice</h2>
+          </div>
+
+          <div class="finder-actions">
+            <button class="hero-button hero-button-primary" id="openRecommended">
+              Recommended mix
+            </button>
+          </div>
+        </div>
+
+        <div class="toolbar">
+          <label class="search-shell">
+            <span class="search-label">Search by need</span>
+            <input
+              id="searchInput"
+              type="search"
+              placeholder="Try autonomy, stakeholder, participation, reflection, flow..."
+            />
+          </label>
+        </div>
+
+        <div class="filter-groups">
+          <div class="filter-group">
+            <p class="group-label">Collection</p>
+            <div class="filter-strip" id="sourceFilters"></div>
+          </div>
+
+          <div class="filter-group">
+            <p class="group-label">Leadership lens</p>
+            <div class="filter-strip" id="lensFilters"></div>
+          </div>
+        </div>
+
+        <section class="quick-start">
+          <div class="quick-start-head">
+            <div>
+              <p class="panel-label">Start From A Situation</p>
+              <p class="quick-start-copy">
+                Pick a situation to narrow the results immediately.
+              </p>
+            </div>
+          </div>
+          <div class="scenario-grid" id="scenarioGrid"></div>
+        </section>
+
+        <div class="active-state">
+          <p id="resultCount"></p>
+          <button class="text-button" id="clearFilters">Clear filters</button>
+        </div>
+
+        <div class="tool-grid" id="toolGrid"></div>
+      </section>
+
+      <section class="section section-alt">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Lenses</p>
+            <h2>How the toolbox is organized</h2>
+          </div>
+          <p class="section-copy">
+            Servant Leadership practices and Liberating Structures now share the
+            same catalog, while still being grouped by leadership intent.
+          </p>
+        </div>
+
+        <div class="lens-grid" id="lensCards"></div>
+      </section>
+    </main>
+
+    <aside class="detail-drawer" id="detailDrawer" aria-hidden="true">
+      <div class="detail-backdrop" id="detailBackdrop"></div>
+      <article class="detail-panel">
+        <button class="detail-close" id="closeDrawer" aria-label="Close">
+          Close
+        </button>
+
+        <div id="detailContent"></div>
+      </article>
+    </aside>
+
+    <footer class="site-footer">
+      <div class="footer-shell">
+        <div class="footer-links">
+          <a href="#" class="footer-link">Scania Privacy Statement</a>
+          <a href="#" class="footer-link">Cookie-inställningar</a>
+        </div>
+        <div class="footer-divider" aria-hidden="true"></div>
+        <p class="footer-copy">Copyright © 2026 Scania</p>
+      </div>
+    </footer>
+
+    <template id="toolCardTemplate">
+      <article class="tool-card">
+        <div class="tool-card-top">
+          <div class="tool-card-meta">
+            <p class="tool-source"></p>
+            <p class="tool-lens"></p>
+            <h3></h3>
+          </div>
+          <span class="tool-time"></span>
+        </div>
+        <p class="tool-summary"></p>
+        <ul class="tag-list"></ul>
+        <div class="tool-card-footer">
+          <p class="tool-signal"></p>
+          <button class="card-button">View tool</button>
+        </div>
+      </article>
+    </template>
+
+    <script src="./ls-details.js?v=2026-04-17-4"></script>
+    <script src="./app.js?v=2026-04-23-1"></script>
+  </body>
+</html>
