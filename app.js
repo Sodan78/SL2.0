@@ -1414,11 +1414,11 @@ function populateScenarios() {
     `;
 
     button.addEventListener("click", () => {
-      state.activeLensId = scenario.lensId;
+      state.activeLensId = null;
       state.activeSourceId = scenario.sourceId;
       state.scenarioToolIds = scenario.recommendedToolIds.slice();
-      state.searchTerm = scenario.searchTerms;
-      searchInput.value = state.searchTerm;
+      state.searchTerm = "";
+      searchInput.value = "";
       renderSourceFilters();
       renderLensFilters();
       renderTools();
@@ -1810,11 +1810,35 @@ function populateLenses() {
     const card = document.createElement("article");
     card.className = "lens-card";
     card.dataset.lens = lens.id;
+    card.tabIndex = 0;
+    card.setAttribute("role", "button");
+    card.setAttribute("aria-label", `Show tools in ${lens.name}`);
     card.innerHTML = `
       <p class="eyebrow">${lens.shortName}</p>
       <h3>${lens.name}</h3>
       <p>${lens.description}</p>
     `;
+
+    const applyLens = () => {
+      state.activeLensId = lens.id;
+      state.activeSourceId = null;
+      state.searchTerm = "";
+      state.scenarioToolIds = [];
+      searchInput.value = "";
+      renderSourceFilters();
+      renderLensFilters();
+      renderTools();
+      document.querySelector("#toolbox").scrollIntoView({ behavior: "smooth" });
+    };
+
+    card.addEventListener("click", applyLens);
+    card.addEventListener("keydown", (event) => {
+      if (event.key === "Enter" || event.key === " ") {
+        event.preventDefault();
+        applyLens();
+      }
+    });
+
     lensCards.appendChild(card);
   });
 }
@@ -1925,6 +1949,7 @@ function renderSourceFilters() {
   allButton.textContent = "All collections";
   allButton.addEventListener("click", () => {
     state.activeSourceId = null;
+    state.scenarioToolIds = [];
     renderSourceFilters();
     renderTools();
   });
@@ -1937,6 +1962,7 @@ function renderSourceFilters() {
     button.textContent = source.name;
     button.addEventListener("click", () => {
       state.activeSourceId = state.activeSourceId === source.id ? null : source.id;
+      state.scenarioToolIds = [];
       renderSourceFilters();
       renderTools();
     });
@@ -1953,6 +1979,7 @@ function renderLensFilters() {
   allButton.textContent = "All lenses";
   allButton.addEventListener("click", () => {
     state.activeLensId = null;
+    state.scenarioToolIds = [];
     renderLensFilters();
     renderTools();
   });
@@ -1965,6 +1992,7 @@ function renderLensFilters() {
     button.textContent = lens.name;
     button.addEventListener("click", () => {
       state.activeLensId = state.activeLensId === lens.id ? null : lens.id;
+      state.scenarioToolIds = [];
       renderLensFilters();
       renderTools();
     });
@@ -1974,6 +2002,7 @@ function renderLensFilters() {
 
 function getFilteredTools() {
   const normalizedSearch = state.searchTerm.trim().toLowerCase();
+  const searchTokens = normalizedSearch.split(/\s+/).filter(Boolean);
   const catalogItems = getCatalogItems();
 
   return catalogItems.filter((tool) => {
@@ -1982,23 +2011,24 @@ function getFilteredTools() {
     const scenarioMatch =
       state.scenarioToolIds.length === 0 || state.scenarioToolIds.includes(tool.id);
 
+    const searchIndex = [
+      tool.title,
+      tool.summary,
+      tool.signal,
+      sourceName(tool.sourceId),
+      lensName(tool.lensId),
+      ...(tool.unlocks ?? []),
+      ...(tool.useWhen ?? []),
+      ...(tool.goodFor ?? []),
+      ...(tool.questions ?? []),
+      ...(tool.searchIndex ?? []),
+    ]
+      .join(" ")
+      .toLowerCase();
+
     const searchMatch =
-      !normalizedSearch ||
-      [
-        tool.title,
-        tool.summary,
-        tool.signal,
-        sourceName(tool.sourceId),
-        lensName(tool.lensId),
-        ...(tool.unlocks ?? []),
-        ...(tool.useWhen ?? []),
-        ...(tool.goodFor ?? []),
-        ...(tool.questions ?? []),
-        ...(tool.searchIndex ?? []),
-      ]
-        .join(" ")
-        .toLowerCase()
-        .includes(normalizedSearch);
+      searchTokens.length === 0 ||
+      searchTokens.every((token) => searchIndex.includes(token));
 
     return lensMatch && sourceMatch && scenarioMatch && searchMatch;
   });
