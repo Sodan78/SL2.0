@@ -42,6 +42,270 @@ const lenses = [
   },
 ];
 
+const manifestoPrinciples = [
+  {
+    id: "align-why-what",
+    principle: "Own Today, Shape Tomorrow",
+    attitude: "I Align direction via WHY & WHAT",
+    lensId: "align",
+    description:
+      "I clarify the purpose and direction. I empower and trust the team members to lead the HOW with aligned autonomy.",
+    behaviours: [
+      "We clearly and transparently communicate intent and outcomes.",
+      "We make direction visible, tangible, and co-owned by the team.",
+    ],
+    result: [
+      "People are more confident and proactive in their decision-making.",
+      "Teams feel empowered.",
+      "Teams align faster, collaborate better, and focus on outcomes instead of outputs.",
+      "Leadership is distributed: everyone feels responsible for achieving impact.",
+    ],
+    tools: [
+      "Why/What/How Canvas",
+      "Outcome Framing",
+      "OKR Mapping",
+      "Intent Briefs",
+      "Delegation Boards",
+      "Delegation Poker",
+    ],
+    relatedToolIds: ["why-what-how", "outcome-framing", "intent-briefs", "delegation-board"],
+  },
+  {
+    id: "situational-leader",
+    principle: "Own Today, Shape Tomorrow",
+    attitude: "I am a Situational Leader",
+    lensId: "situational",
+    description:
+      "I adapt my leadership to the situation, context, and people involved so that I enable the best possible outcome.",
+    behaviours: [
+      "We adjust how we lead based on team maturity and individual needs.",
+      "We flex between guiding, coaching, or stepping back based on what will create progress.",
+      "We interact face to face as much as possible.",
+    ],
+    result: [
+      "We respond faster and more effectively to changing realities.",
+      "Teams feel understood, supported, and trusted.",
+      "We create balance between structure and freedom and deliver stronger customer value through adaptability.",
+      "Less micro-management, more ownership.",
+    ],
+    tools: [
+      "Situational Leadership Matrix",
+      "Team Maturity Radar",
+      "Support vs Autonomy Check-ins",
+    ],
+    relatedToolIds: ["situational-matrix", "team-maturity-radar", "support-autonomy"],
+  },
+  {
+    id: "game-changer",
+    principle: "Dare to Try, Manage the Risk",
+    attitude: "I am a Game Changer",
+    lensId: "gamechanger",
+    description:
+      "I challenge how things have always been done. I raise my and my team's opinion and drive change to create value for our customer. I treat change as a source of growth and inspiration.",
+    behaviours: [
+      "We question old assumptions, run experiments, and navigate uncertainty with care.",
+      "We surface and remove blockers early, encourage risk-taking and learning.",
+      "We work to improve the system and remove impediments even when it is hard.",
+    ],
+    result: [
+      "We innovate faster.",
+      "Change feels energizing instead of threatening.",
+      "Teams adapt smoothly, bounce back from disruption, and grow stronger and smarter with every shift.",
+    ],
+    tools: [
+      "Experiment Canvas",
+      "Change Champion Circles",
+      "Break-the-routine retros",
+      "Stakeholder Management",
+      "Storytelling",
+    ],
+    relatedToolIds: [
+      "experiment-canvas",
+      "change-champion-circles",
+      "retros-prompts",
+      "stakeholder-management",
+      "storytelling",
+    ],
+  },
+  {
+    id: "whole-system",
+    principle: "Dare to Try, Manage the Risk",
+    attitude: "I Think and Act for the whole",
+    lensId: "system",
+    description:
+      "I lead to create a system with great value flow. I create clarity and alignment so value moves with purpose from idea to impact. I recognize and handle bottlenecks early to optimize the flow.",
+    behaviours: [
+      "We make our end-to-end value flow visible.",
+      "We align priorities with real capacity.",
+      "We limit work in progress to protect focus.",
+      "We surface bottlenecks early and address root causes.",
+      "We balance ambition with capacity, protecting both performance and people.",
+    ],
+    result: [
+      "Clear direction and focused execution.",
+      "Faster, more predictable value delivery.",
+      "Sustainable pace without burnout.",
+      "Stronger cross-functional collaboration.",
+      "An adaptive system that learns and improves over time.",
+    ],
+    tools: [
+      "Value Stream Mapping",
+      "Portfolio / Team Kanban with WIP Limit",
+      "Flow Metrics",
+      "Structured Problem Solving",
+    ],
+    relatedToolIds: ["value-stream-mapping", "ls-ecocycle-planning"],
+  },
+  {
+    id: "growth-role-model",
+    principle: "Dare to Try, Manage the Risk",
+    attitude: "I am a Role Model for Growth",
+    lensId: "situational",
+    description:
+      "I am curious about learning new things, or unlearning old things, and I am transparent about my progress even when I fail.",
+    behaviours: [
+      "We share our own development goals transparently.",
+      "We ask for feedback regularly.",
+      "We talk openly about what we are unlearning.",
+      "We encourage retros for learning cycles.",
+    ],
+    result: [
+      "Growth becomes part of the team culture.",
+      "People feel safe to make mistakes.",
+      "Continuous improvement feels real, not theoretical.",
+      "Retros are part of the feedback loops.",
+    ],
+    tools: [
+      "Feedback Canvas",
+      "Retro",
+      "Learning Logs",
+      "What I'm Unlearning Team Wall",
+    ],
+    relatedToolIds: ["retros-prompts", "ls-w3", "ls-appreciative-interviews"],
+  },
+  {
+    id: "cultural-ambassador",
+    principle: "Start with trust, Build together",
+    attitude: "I am a Cultural Ambassador",
+    lensId: "gamechanger",
+    description:
+      "I am curious about other cultures and build connections that foster respect, empowerment, and inclusion.",
+    behaviours: [
+      "We stay open and curious to understand different perspectives.",
+      "We adapt how we connect so everyone feels respected and valued.",
+      "We build bridges across cultures and teams to foster inclusion and shared success.",
+    ],
+    result: [
+      "Our culture becomes intentional, not accidental.",
+      "People feel they belong, can contribute fully, and trust the environment.",
+      "Teams thrive across boundaries, backgrounds, and differences.",
+    ],
+    tools: [
+      "Culture Toolbox",
+      "Culture Connect Game",
+      "Cultural Check-ins",
+      "Inclusion Nudges",
+      "Team Agreements",
+      "Retros with culture lens",
+      "Scania Core Values cards",
+    ],
+    relatedToolIds: ["ls-conversation-cafe", "ls-hsr", "ls-social-network-webbing"],
+  },
+  {
+    id: "psychological-safety",
+    principle: "Start with trust, Build together",
+    attitude: "I Cultivate Psychological Safety",
+    lensId: "situational",
+    description:
+      "I create a safe place for teams to speak openly, to take risks, and to grow.",
+    behaviours: [
+      "We invite every voice into the conversation.",
+      "We celebrate curiosity, even when wrong.",
+      "We praise risk-taking and effort, not just output.",
+    ],
+    result: [
+      "More diverse ideas surface.",
+      "Problems are addressed earlier.",
+      "Team morale and collaboration improve between people, teams, and cultures.",
+    ],
+    tools: [
+      "Psychological Safety Pulse Survey",
+      "Red Flag Round in dailies",
+      "Retros with What I didn't say rounds",
+    ],
+    relatedToolIds: ["ls-1-2-4-all", "ls-hsr", "ls-conversation-cafe"],
+  },
+  {
+    id: "empathy-intent",
+    principle: "Start with trust, Build together",
+    attitude: "I Lead with Empathy and Intent",
+    lensId: "situational",
+    description:
+      "I lead with understanding and act with clarity, transparency, and care.",
+    behaviours: [
+      "We listen to what is said and unsaid.",
+      "We share intent before making decisions.",
+      "We prioritize human connection alongside goals.",
+      "We show up authentic at all times.",
+    ],
+    result: [
+      "Less friction and more trust and authenticity in communication and relations.",
+      "Greater psychological safety.",
+      "Team members feel respected and aligned.",
+    ],
+    tools: [
+      "Ladder of Inference",
+      "Empathy Interviews",
+      "Intent Clarity Framework",
+      "X and Y leadership",
+    ],
+    relatedToolIds: ["ls-hsr", "intent-briefs", "ls-appreciative-interviews"],
+  },
+];
+
+const manifestoHotspots = [
+  {
+    principleId: "cultural-ambassador",
+    label: "Open material for I am a Cultural Ambassador",
+    position: { left: 9.7, top: 14.1, width: 36.2, height: 18.1 },
+  },
+  {
+    principleId: "align-why-what",
+    label: "Open material for I Align direction via WHY and WHAT",
+    position: { left: 54, top: 14.1, width: 35.7, height: 18.1 },
+  },
+  {
+    principleId: "psychological-safety",
+    label: "Open material for I Cultivate Psychological Safety",
+    position: { left: 1, top: 34.9, width: 36.2, height: 17.9 },
+  },
+  {
+    principleId: "game-changer",
+    label: "Open material for I am a Game Changer",
+    position: { left: 62.9, top: 34.9, width: 36, height: 17.9 },
+  },
+  {
+    principleId: "empathy-intent",
+    label: "Open material for I Lead with Empathy and Intent",
+    position: { left: 1, top: 55.6, width: 36.2, height: 18 },
+  },
+  {
+    principleId: "whole-system",
+    label: "Open material for I Think and Act for the whole",
+    position: { left: 62.9, top: 55.6, width: 32.7, height: 18 },
+  },
+  {
+    principleId: "growth-role-model",
+    label: "Open material for I am a Role Model for Growth",
+    position: { left: 9.7, top: 76.4, width: 36.2, height: 18.1 },
+  },
+  {
+    principleId: "situational-leader",
+    label: "Open material for I am a Situational Leader",
+    position: { left: 54, top: 76.4, width: 35.7, height: 18.1 },
+  },
+];
+
 const scenarios = [
   {
     title: "Direction is fuzzy",
@@ -980,6 +1244,7 @@ const scenarioGrid = document.querySelector("#scenarioGrid");
 const lensFilters = document.querySelector("#lensFilters");
 const sourceFilters = document.querySelector("#sourceFilters");
 const lensCards = document.querySelector("#lensCards");
+const manifestoHotspotLayer = document.querySelector("#manifestoHotspots");
 const toolGrid = document.querySelector("#toolGrid");
 const searchInput = document.querySelector("#searchInput");
 const resultCount = document.querySelector("#resultCount");
@@ -1637,6 +1902,109 @@ function populateLenses() {
   });
 }
 
+function populateManifestoHotspots() {
+  manifestoHotspotLayer.innerHTML = "";
+
+  manifestoHotspots.forEach((hotspot) => {
+    const button = document.createElement("button");
+    button.className = "manifesto-hotspot";
+    button.type = "button";
+    button.dataset.principleId = hotspot.principleId;
+    button.setAttribute("aria-label", hotspot.label);
+    button.title = hotspot.label.replace("Open material for ", "");
+
+    Object.entries(hotspot.position).forEach(([key, value]) => {
+      button.style[key] = `${value}%`;
+    });
+
+    button.addEventListener("click", () => {
+      openManifestoDrawer(hotspot.principleId);
+    });
+
+    manifestoHotspotLayer.appendChild(button);
+  });
+}
+
+function openManifestoDrawer(principleId) {
+  const principle = manifestoPrinciples.find((entry) => entry.id === principleId);
+  if (!principle) {
+    return;
+  }
+
+  detailContent.innerHTML = `
+    <header class="detail-header">
+      <p class="eyebrow">${principle.principle}</p>
+      <h2 class="detail-title">${principle.attitude}</h2>
+      <p class="detail-subtitle">${principle.description}</p>
+      <div class="detail-meta">
+        <span>${lensName(principle.lensId)}</span>
+        <span>${principle.tools.length} example tools</span>
+      </div>
+    </header>
+
+    <section class="detail-section">
+      <h4>Team Behaviours</h4>
+      <ul class="detail-list">
+        ${principle.behaviours.map((item) => `<li>${item}</li>`).join("")}
+      </ul>
+    </section>
+
+    <section class="detail-section">
+      <h4>Organizational Result</h4>
+      <ul class="detail-list">
+        ${principle.result.map((item) => `<li>${item}</li>`).join("")}
+      </ul>
+    </section>
+
+    <section class="detail-section">
+      <h4>Example Tools</h4>
+      <ul class="detail-list">
+        ${principle.tools.map((item) => `<li>${item}</li>`).join("")}
+      </ul>
+    </section>
+
+    <div class="detail-link-row">
+      <button class="detail-link detail-link-primary" type="button" data-manifesto-search>
+        Find related tools
+      </button>
+      <button class="detail-link" type="button" data-manifesto-lens="${principle.lensId}">
+        More in this lens
+      </button>
+    </div>
+  `;
+
+  const searchButton = detailContent.querySelector("[data-manifesto-search]");
+  searchButton.addEventListener("click", () => {
+    state.activeLensId = principle.relatedToolIds?.length ? null : principle.lensId;
+    state.activeSourceId = null;
+    state.scenarioToolIds = principle.relatedToolIds ?? [];
+    state.searchTerm = "";
+    searchInput.value = "";
+    renderSourceFilters();
+    renderLensFilters();
+    renderTools();
+    closeDrawerPanel();
+    document.querySelector("#toolbox").scrollIntoView({ behavior: "smooth" });
+  });
+
+  const lensButton = detailContent.querySelector("[data-manifesto-lens]");
+  lensButton.addEventListener("click", () => {
+    state.activeLensId = principle.lensId;
+    state.activeSourceId = null;
+    state.scenarioToolIds = [];
+    state.searchTerm = "";
+    searchInput.value = "";
+    renderSourceFilters();
+    renderLensFilters();
+    renderTools();
+    closeDrawerPanel();
+    document.querySelector("#toolbox").scrollIntoView({ behavior: "smooth" });
+  });
+
+  detailDrawer.classList.add("open");
+  detailDrawer.setAttribute("aria-hidden", "false");
+}
+
 function renderSourceFilters() {
   sourceFilters.innerHTML = "";
 
@@ -1950,6 +2318,7 @@ openRecommended.addEventListener("click", () => {
 
 populateScenarios();
 populateLenses();
+populateManifestoHotspots();
 renderSourceFilters();
 renderLensFilters();
 renderTools();

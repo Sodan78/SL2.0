@@ -260,12 +260,44 @@ h3 {
   margin: 0 0 1rem;
 }
 
+.manifesto-map {
+  position: relative;
+}
+
 .manifesto-image {
   width: 100%;
   display: block;
   border-radius: 20px;
   border: 1px solid var(--line);
   box-shadow: 0 22px 42px rgba(16, 43, 78, 0.12);
+}
+
+.manifesto-hotspots {
+  position: absolute;
+  inset: 0;
+  border-radius: 20px;
+}
+
+.manifesto-hotspot {
+  position: absolute;
+  border: 1px solid transparent;
+  border-radius: 12px;
+  background: transparent;
+  cursor: pointer;
+  transition:
+    background 140ms ease,
+    border-color 140ms ease,
+    box-shadow 140ms ease;
+}
+
+.manifesto-hotspot:hover,
+.manifesto-hotspot:focus-visible {
+  border-color: rgba(255, 255, 255, 0.85);
+  background: rgba(255, 255, 255, 0.1);
+  box-shadow:
+    0 0 0 3px rgba(16, 43, 78, 0.22),
+    inset 0 0 0 1px rgba(16, 43, 78, 0.18);
+  outline: none;
 }
 
 .finder-head,
