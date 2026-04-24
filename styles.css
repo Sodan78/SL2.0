@@ -980,6 +980,19 @@ h3 {
 
 .lens-card {
   padding: 1rem;
+  cursor: pointer;
+  transition:
+    border-color 140ms ease,
+    box-shadow 140ms ease,
+    transform 140ms ease;
+}
+
+.lens-card:hover,
+.lens-card:focus-visible {
+  border-color: var(--line-strong);
+  box-shadow: 0 16px 34px rgba(16, 43, 78, 0.12);
+  outline: none;
+  transform: translateY(-1px);
 }
 
 .lens-card h3 {
