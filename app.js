@@ -49,25 +49,13 @@ const manifestoPrinciples = [
     attitude: "I Align direction via WHY & WHAT",
     lensId: "align",
     description:
-      "I clarify the purpose and direction. I empower and trust the team members to lead the HOW with aligned autonomy.",
-    behaviours: [
-      "We clearly and transparently communicate intent and outcomes.",
-      "We make direction visible, tangible, and co-owned by the team.",
-    ],
-    result: [
-      "People are more confident and proactive in their decision-making.",
-      "Teams feel empowered.",
-      "Teams align faster, collaborate better, and focus on outcomes instead of outputs.",
-      "Leadership is distributed: everyone feels responsible for achieving impact.",
-    ],
-    tools: [
-      "Why/What/How Canvas",
-      "Outcome Framing",
-      "OKR Mapping",
-      "Intent Briefs",
-      "Delegation Boards",
-      "Delegation Poker",
-    ],
+      "I clarify the purpose and direction. I empower and trust the team members to lead the HOW with aligned autonomy \n",
+    behavioursText:
+      "We clearly and transparently communicate intent and outcomes. We make direction visible, tangible, and co-owned by the team.\n",
+    resultText:
+      "People are more confident and proactive in their decision-making.Teams feel empowered.\nTeams align faster, collaborate better, and focus on outcomes instead of outputs.\nLeadership is distributed — everyone feels responsible for achieving impact.",
+    toolsText:
+      "👉 Why/What/How Canvas, Outcome Framing, OKR Mapping, Intent Briefs, Delegation Boards, Delegation Poker",
     relatedToolIds: ["why-what-how", "outcome-framing", "intent-briefs", "delegation-board"],
   },
   {
@@ -76,23 +64,13 @@ const manifestoPrinciples = [
     attitude: "I am a Situational Leader",
     lensId: "situational",
     description:
-      "I adapt my leadership to the situation, context, and people involved so that I enable the best possible outcome.",
-    behaviours: [
-      "We adjust how we lead based on team maturity and individual needs.",
-      "We flex between guiding, coaching, or stepping back based on what will create progress.",
-      "We interact face to face as much as possible.",
-    ],
-    result: [
-      "We respond faster and more effectively to changing realities.",
-      "Teams feel understood, supported, and trusted.",
-      "We create balance between structure and freedom and deliver stronger customer value through adaptability.",
-      "Less micro-management, more ownership.",
-    ],
-    tools: [
-      "Situational Leadership Matrix",
-      "Team Maturity Radar",
-      "Support vs Autonomy Check-ins",
-    ],
+      "I adapt my leadership to the situation, context, and people involved so that I enable the best possible outcome ",
+    behavioursText:
+      "We adjust how we lead based on team maturity and individual needs. We flex between guiding, coaching, or stepping back based on what will create progress. We interact face to face as much as possible.\n",
+    resultText:
+      "We respond faster and more effectively to changing realities.Teams feel understood, supported, and trusted. We create balance between structure and freedom and deliver stronger customer value through adaptability. Less micro-management, more ownership.",
+    toolsText:
+      "👉 Situational Leadership Matrix, Team Maturity Radar, “Support vs Autonomy” Check-ins",
     relatedToolIds: ["situational-matrix", "team-maturity-radar", "support-autonomy"],
   },
   {
@@ -101,24 +79,13 @@ const manifestoPrinciples = [
     attitude: "I am a Game Changer",
     lensId: "gamechanger",
     description:
-      "I challenge how things have always been done. I raise my and my team's opinion and drive change to create value for our customer. I treat change as a source of growth and inspiration.",
-    behaviours: [
-      "We question old assumptions, run experiments, and navigate uncertainty with care.",
-      "We surface and remove blockers early, encourage risk-taking and learning.",
-      "We work to improve the system and remove impediments even when it is hard.",
-    ],
-    result: [
-      "We innovate faster.",
-      "Change feels energizing instead of threatening.",
-      "Teams adapt smoothly, bounce back from disruption, and grow stronger and smarter with every shift.",
-    ],
-    tools: [
-      "Experiment Canvas",
-      "Change Champion Circles",
-      "Break-the-routine retros",
-      "Stakeholder Management",
-      "Storytelling",
-    ],
+      "I challenge how things have always been done. I raise my and my teams opinion and drive change to create value for our customer. I treat change as a source of growth and inspiration.\n",
+    behavioursText:
+      "We question old assumptions, run experiments, and navigate uncertainty with care. We surface and remove blockers early, encourage risk-taking and learning. We work to improve the system and remove impediments even when its hard.",
+    resultText:
+      "We innovate faster. Change feels energizing instead of threatening. Teams adapt smoothly, bounce back from disruption, and grow stronger and smarter with every shift. ",
+    toolsText:
+      "👉 Experiment Canvas, Change Champion Circles, Retros with “break-the-routine” prompts, Stake holder management, Story Telling",
     relatedToolIds: [
       "experiment-canvas",
       "change-champion-circles",
@@ -130,30 +97,16 @@ const manifestoPrinciples = [
   {
     id: "whole-system",
     principle: "Dare to Try, Manage the Risk",
-    attitude: "I Think and Act for the whole",
+    attitude: "I Think and Act for the whole ",
     lensId: "system",
     description:
-      "I lead to create a system with great value flow. I create clarity and alignment so value moves with purpose from idea to impact. I recognize and handle bottlenecks early to optimize the flow.",
-    behaviours: [
-      "We make our end-to-end value flow visible.",
-      "We align priorities with real capacity.",
-      "We limit work in progress to protect focus.",
-      "We surface bottlenecks early and address root causes.",
-      "We balance ambition with capacity, protecting both performance and people.",
-    ],
-    result: [
-      "Clear direction and focused execution.",
-      "Faster, more predictable value delivery.",
-      "Sustainable pace without burnout.",
-      "Stronger cross-functional collaboration.",
-      "An adaptive system that learns and improves over time.",
-    ],
-    tools: [
-      "Value Stream Mapping",
-      "Portfolio / Team Kanban with WIP Limit",
-      "Flow Metrics",
-      "Structured Problem Solving",
-    ],
+      "I Lead to create a system with great value flow. I create clarity and alignment so value moves with purpose from idea to impact. I recognize and handle bottlenecks early to optimize the flow.",
+    behavioursText:
+      "We make our end-to-end value flow visible. We align priorities with real capacity.We limit work in progress to protect focus. We surface bottlenecks early and address root causes.We balance ambition with capacity, protecting both performance and people.\n",
+    resultText:
+      "Clear direction and focused execution. Faster, more predictable value delivery.\nSustainable pace without burnout. Stronger cross-functional collaboration.\nAn adaptive system that learns and improves over time.",
+    toolsText:
+      "🧰 Value Stream Mapping,  Portfolio / Team Kanban with WIP Limit, Flow Metrics , Structured Problem Solving (A3 / Root Cause Analysis)",
     relatedToolIds: ["value-stream-mapping", "ls-ecocycle-planning"],
   },
   {
@@ -162,25 +115,13 @@ const manifestoPrinciples = [
     attitude: "I am a Role Model for Growth",
     lensId: "situational",
     description:
-      "I am curious about learning new things, or unlearning old things, and I am transparent about my progress even when I fail.",
-    behaviours: [
-      "We share our own development goals transparently.",
-      "We ask for feedback regularly.",
-      "We talk openly about what we are unlearning.",
-      "We encourage retros for learning cycles.",
-    ],
-    result: [
-      "Growth becomes part of the team culture.",
-      "People feel safe to make mistakes.",
-      "Continuous improvement feels real, not theoretical.",
-      "Retros are part of the feedback loops.",
-    ],
-    tools: [
-      "Feedback Canvas",
-      "Retro",
-      "Learning Logs",
-      "What I'm Unlearning Team Wall",
-    ],
+      "I am curious about learning new things - or unlearn old — and I am transparent about my progress even when I fail.\n",
+    behavioursText:
+      "\nWe share our own development goals transparently. We ask for feedback regularly. We talk openly about what we´re unlearning and we encourage retros for learning cycles\n",
+    resultText:
+      "Growth becomes part of the team culture. People feel safe to make mistakes. Continuous improvement feels real, not theoretical. Retros is part of the feedbackloops.",
+    toolsText:
+      "👉 Feedback Canvas, Retro, Learning Logs, “What I’m Unlearning” Team Wall",
     relatedToolIds: ["retros-prompts", "ls-w3", "ls-appreciative-interviews"],
   },
   {
@@ -189,26 +130,13 @@ const manifestoPrinciples = [
     attitude: "I am a Cultural Ambassador",
     lensId: "gamechanger",
     description:
-      "I am curious about other cultures and build connections that foster respect, empowerment, and inclusion.",
-    behaviours: [
-      "We stay open and curious to understand different perspectives.",
-      "We adapt how we connect so everyone feels respected and valued.",
-      "We build bridges across cultures and teams to foster inclusion and shared success.",
-    ],
-    result: [
-      "Our culture becomes intentional, not accidental.",
-      "People feel they belong, can contribute fully, and trust the environment.",
-      "Teams thrive across boundaries, backgrounds, and differences.",
-    ],
-    tools: [
-      "Culture Toolbox",
-      "Culture Connect Game",
-      "Cultural Check-ins",
-      "Inclusion Nudges",
-      "Team Agreements",
-      "Retros with culture lens",
-      "Scania Core Values cards",
-    ],
+      "I am curious about other cultures and build connections that foster respect, empowerment, and inclusion \n",
+    behavioursText:
+      "We stay open and curious to understand different perspectives. We adapt how we connect so everyone feels respected and valued. We build bridges across cultures and teams to foster inclusion and shared success.\n",
+    resultText:
+      "Culture by Design - Our culture becomes intentional, not accidental.\nPeople feel they belong, can contribute fully, and trust the environment.\nTeams thrive across boundaries, backgrounds, and differences.",
+    toolsText:
+      "🧰 Culture Toolbox, Culture Connect Game Cultural Check-ins, Inclusion Nudges, Team Agreements, Retros with “culture lens,” Scania Core Values cards",
     relatedToolIds: ["ls-conversation-cafe", "ls-hsr", "ls-social-network-webbing"],
   },
   {
@@ -218,21 +146,12 @@ const manifestoPrinciples = [
     lensId: "situational",
     description:
       "I create a safe place for teams to speak openly, to take risks, and to grow.",
-    behaviours: [
-      "We invite every voice into the conversation.",
-      "We celebrate curiosity, even when wrong.",
-      "We praise risk-taking and effort, not just output.",
-    ],
-    result: [
-      "More diverse ideas surface.",
-      "Problems are addressed earlier.",
-      "Team morale and collaboration improve between people, teams, and cultures.",
-    ],
-    tools: [
-      "Psychological Safety Pulse Survey",
-      "Red Flag Round in dailies",
-      "Retros with What I didn't say rounds",
-    ],
+    behavioursText:
+      "We invite every voice into the conversation. We celebrate curiosity, even when wrong. We praise risk-taking and effort, not just output.",
+    resultText:
+      "More diverse ideas surface. Problems are addressed earlier. Team morale and collaboration improve between people, teams and cultures.",
+    toolsText:
+      "👉 Psychological Safety Pulse Survey, “Red Flag Round” in dailies, Retros with “What I didn’t say” rounds",
     relatedToolIds: ["ls-1-2-4-all", "ls-hsr", "ls-conversation-cafe"],
   },
   {
@@ -241,24 +160,13 @@ const manifestoPrinciples = [
     attitude: "I Lead with Empathy and Intent",
     lensId: "situational",
     description:
-      "I lead with understanding and act with clarity, transparency, and care.",
-    behaviours: [
-      "We listen to what is said and unsaid.",
-      "We share intent before making decisions.",
-      "We prioritize human connection alongside goals.",
-      "We show up authentic at all times.",
-    ],
-    result: [
-      "Less friction and more trust and authenticity in communication and relations.",
-      "Greater psychological safety.",
-      "Team members feel respected and aligned.",
-    ],
-    tools: [
-      "Ladder of Inference",
-      "Empathy Interviews",
-      "Intent Clarity Framework",
-      "X and Y leadership",
-    ],
+      "I lead with understanding — and act with clarity, transparency and care.",
+    behavioursText:
+      "We listen to what’s said and unsaid. I share my intent before making decisions. I prioritize human connection alongside goals. I show up authentic at all times.",
+    resultText:
+      "Less friction and more trust and authenticity in communication and relations. Greater psychological safety. Team members feel respected and aligned.",
+    toolsText:
+      "👉 Ladder of Inference, Empathy Interviews, Intent Clarity Framework (“My intent is…”) X and Y leadership",
     relatedToolIds: ["ls-hsr", "intent-briefs", "ls-appreciative-interviews"],
   },
 ];
@@ -1267,6 +1175,15 @@ function sourceName(sourceId) {
   return sources.find((source) => source.id === sourceId)?.shortName ?? "";
 }
 
+function escapeHtml(value) {
+  return String(value)
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#039;");
+}
+
 function formatParticipation(structure) {
   return structure.participation.includes("solo") ? "Group & Solo" : "Group";
 }
@@ -1933,34 +1850,28 @@ function openManifestoDrawer(principleId) {
 
   detailContent.innerHTML = `
     <header class="detail-header">
-      <p class="eyebrow">${principle.principle}</p>
-      <h2 class="detail-title">${principle.attitude}</h2>
-      <p class="detail-subtitle">${principle.description}</p>
+      <p class="eyebrow">${escapeHtml(principle.principle)}</p>
+      <h2 class="detail-title">${escapeHtml(principle.attitude)}</h2>
+      <p class="detail-subtitle detail-source-text">${escapeHtml(principle.description)}</p>
       <div class="detail-meta">
         <span>${lensName(principle.lensId)}</span>
-        <span>${principle.tools.length} example tools</span>
+        <span>Source: Excel Final sheet</span>
       </div>
     </header>
 
     <section class="detail-section">
       <h4>Team Behaviours</h4>
-      <ul class="detail-list">
-        ${principle.behaviours.map((item) => `<li>${item}</li>`).join("")}
-      </ul>
+      <p class="detail-copy detail-source-text">${escapeHtml(principle.behavioursText)}</p>
     </section>
 
     <section class="detail-section">
       <h4>Organizational Result</h4>
-      <ul class="detail-list">
-        ${principle.result.map((item) => `<li>${item}</li>`).join("")}
-      </ul>
+      <p class="detail-copy detail-source-text">${escapeHtml(principle.resultText)}</p>
     </section>
 
     <section class="detail-section">
       <h4>Example Tools</h4>
-      <ul class="detail-list">
-        ${principle.tools.map((item) => `<li>${item}</li>`).join("")}
-      </ul>
+      <p class="detail-copy detail-source-text">${escapeHtml(principle.toolsText)}</p>
     </section>
 
     <div class="detail-link-row">
