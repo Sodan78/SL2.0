@@ -134,12 +134,34 @@
       <div class="footer-shell">
         <div class="footer-links">
           <a href="#" class="footer-link">Scania Privacy Statement</a>
-          <a href="#" class="footer-link">Cookie-inställningar</a>
+          <a href="#" class="footer-link" id="cookieSettings">Cookie-inställningar</a>
         </div>
         <div class="footer-divider" aria-hidden="true"></div>
         <p class="footer-copy">Copyright © 2026 Scania</p>
       </div>
     </footer>
+
+    <aside
+      class="analytics-consent"
+      id="analyticsConsentBanner"
+      aria-label="Analytics consent"
+      aria-live="polite"
+      hidden
+    >
+      <div>
+        <p class="analytics-consent-title">Help us improve this toolbox</p>
+        <p class="analytics-consent-copy">
+          We use Google Analytics to understand aggregated usage, such as opened
+          tools, filters, and source-link clicks. We do not track your search text.
+        </p>
+      </div>
+      <div class="analytics-consent-actions">
+        <button class="text-button" type="button" id="declineAnalytics">No thanks</button>
+        <button class="hero-button hero-button-primary" type="button" id="acceptAnalytics">
+          Allow analytics
+        </button>
+      </div>
+    </aside>
 
     <template id="toolCardTemplate">
       <article class="tool-card">

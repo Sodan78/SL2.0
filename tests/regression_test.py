@@ -57,6 +57,25 @@ class StaticAppRegressionTests(unittest.TestCase):
         self.assertIn("#356fc4", favicon)
         self.assertNotRegex(favicon, r"<text\b")
 
+    def test_google_analytics_loads_only_after_consent(self):
+        self.assertIn("G-15SPXQJVZR", self.app)
+        self.assertIn("analyticsConsentBanner", self.index)
+        self.assertIn("acceptAnalytics", self.index)
+        self.assertIn("declineAnalytics", self.index)
+        self.assertIn("loadGoogleAnalytics", self.app)
+        self.assertIn("googletagmanager.com/gtag/js?id=", self.app)
+        self.assertIn("sl20AnalyticsConsent", self.app)
+        self.assertNotIn("<script async src=\"https://www.googletagmanager.com/gtag/js", self.index)
+
+    def test_usage_events_are_tracked_without_search_text(self):
+        self.assertIn('trackUsage("tool_open"', self.app)
+        self.assertIn('trackUsage("lens_filter"', self.app)
+        self.assertIn('trackUsage("source_filter"', self.app)
+        self.assertIn('trackUsage("source_link_click"', self.app)
+        self.assertNotIn("search_text", self.app)
+        self.assertNotIn("search_term", self.app)
+        self.assertNotIn('trackUsage("search', self.app)
+
     def test_manifesto_text_is_verbatim_from_excel_final_sheet(self):
         source_rows = self._read_final_sheet_rows()
         app_rows = self._read_manifesto_rows_from_app()

@@ -11,6 +11,9 @@ const sources = [
   },
 ];
 
+const googleAnalyticsId = "G-15SPXQJVZR";
+const analyticsConsentStorageKey = "sl20AnalyticsConsent";
+
 const scaniaSharePointOrigin = "https://scaniaazureservices.sharepoint.com";
 const scaniaSourceServerRoot =
   "/teams/AgileScania/Shared Documents/Servant Leadership/Team Tiger Workmaterial";
@@ -1820,6 +1823,10 @@ const detailContent = document.querySelector("#detailContent");
 const closeDrawer = document.querySelector("#closeDrawer");
 const openRecommended = document.querySelector("#openRecommended");
 const cardTemplate = document.querySelector("#toolCardTemplate");
+const analyticsConsentBanner = document.querySelector("#analyticsConsentBanner");
+const acceptAnalytics = document.querySelector("#acceptAnalytics");
+const declineAnalytics = document.querySelector("#declineAnalytics");
+const cookieSettings = document.querySelector("#cookieSettings");
 let lsExerciseDetails = window.lsExerciseDetails ?? {};
 let lsExerciseDetailsPromise = null;
 const LS_DETAILS_URL = "./ls-details.js?v=2026-04-17-3";
@@ -1839,6 +1846,92 @@ function escapeHtml(value) {
     .replaceAll(">", "&gt;")
     .replaceAll('"', "&quot;")
     .replaceAll("'", "&#039;");
+}
+
+function readAnalyticsConsent() {
+  try {
+    return localStorage.getItem(analyticsConsentStorageKey);
+  } catch {
+    return null;
+  }
+}
+
+function writeAnalyticsConsent(value) {
+  try {
+    localStorage.setItem(analyticsConsentStorageKey, value);
+  } catch {
+    // If storage is unavailable, keep the choice for the current page only.
+  }
+}
+
+function showAnalyticsConsent() {
+  if (analyticsConsentBanner) {
+    analyticsConsentBanner.hidden = false;
+  }
+}
+
+function hideAnalyticsConsent() {
+  if (analyticsConsentBanner) {
+    analyticsConsentBanner.hidden = true;
+  }
+}
+
+function loadGoogleAnalytics() {
+  if (window.gtag || document.querySelector(`[src*="${googleAnalyticsId}"]`)) {
+    return;
+  }
+
+  window.dataLayer = window.dataLayer || [];
+  window.gtag = function gtag() {
+    window.dataLayer.push(arguments);
+  };
+  window.gtag("js", new Date());
+  window.gtag("config", googleAnalyticsId, {
+    anonymize_ip: true,
+  });
+
+  const script = document.createElement("script");
+  script.async = true;
+  script.src = `https://www.googletagmanager.com/gtag/js?id=${googleAnalyticsId}`;
+  document.head.appendChild(script);
+}
+
+function initAnalyticsConsent() {
+  const savedConsent = readAnalyticsConsent();
+
+  if (savedConsent === "accepted") {
+    hideAnalyticsConsent();
+    loadGoogleAnalytics();
+  } else if (savedConsent === "declined") {
+    hideAnalyticsConsent();
+  } else {
+    showAnalyticsConsent();
+  }
+
+  acceptAnalytics?.addEventListener("click", () => {
+    writeAnalyticsConsent("accepted");
+    hideAnalyticsConsent();
+    loadGoogleAnalytics();
+    trackUsage("analytics_consent", { decision: "accepted" });
+  });
+
+  declineAnalytics?.addEventListener("click", () => {
+    writeAnalyticsConsent("declined");
+    hideAnalyticsConsent();
+  });
+
+  cookieSettings?.addEventListener("click", (event) => {
+    event.preventDefault();
+    showAnalyticsConsent();
+  });
+}
+
+function trackUsage(eventName, parameters = {}) {
+  if (readAnalyticsConsent() !== "accepted" || typeof window.gtag !== "function") {
+    return;
+  }
+
+  window.gtag("event", eventName, parameters);
 }
 
 function formatParticipation(structure) {
@@ -2080,6 +2173,11 @@ function populateScenarios() {
       state.scenarioToolIds = scenario.recommendedToolIds.slice();
       state.searchTerm = "";
       searchInput.value = "";
+      trackUsage("scenario_open", {
+        scenario_title: scenario.title,
+        lens_id: scenario.lensId || "none",
+        item_count: state.scenarioToolIds.length,
+      });
       renderSourceFilters();
       renderLensFilters();
       renderTools();
@@ -2449,11 +2547,21 @@ async function openLsDrawer(structureId) {
 
   initializeLsStepExperience();
 
+  const sourceLink = detailContent.querySelector(".detail-link-primary[href]");
+  sourceLink?.addEventListener("click", () => {
+    trackUsage("source_link_click", {
+      tool_id: structure.id,
+      source_id: "liberating-structures",
+      lens_id: mapLsLens(structure),
+    });
+  });
+
   const relatedThemeButton = detailContent.querySelector("[data-ls-theme]");
   relatedThemeButton.addEventListener("click", () => {
     state.activeSourceId = "liberating-structures";
     state.searchTerm = structure.themes[0];
     searchInput.value = state.searchTerm;
+    trackUsage("source_filter", { source_id: "liberating-structures" });
     renderSourceFilters();
     closeDrawerPanel();
     renderTools();
@@ -2486,6 +2594,7 @@ function populateLenses() {
       state.searchTerm = "";
       state.scenarioToolIds = [];
       searchInput.value = "";
+      trackUsage("lens_filter", { lens_id: lens.id });
       renderSourceFilters();
       renderLensFilters();
       renderTools();
@@ -2611,6 +2720,7 @@ function renderSourceFilters() {
   allButton.addEventListener("click", () => {
     state.activeSourceId = null;
     state.scenarioToolIds = [];
+    trackUsage("source_filter", { source_id: "all" });
     renderSourceFilters();
     renderTools();
   });
@@ -2624,6 +2734,7 @@ function renderSourceFilters() {
     button.addEventListener("click", () => {
       state.activeSourceId = state.activeSourceId === source.id ? null : source.id;
       state.scenarioToolIds = [];
+      trackUsage("source_filter", { source_id: state.activeSourceId || "all" });
       renderSourceFilters();
       renderTools();
     });
@@ -2641,6 +2752,7 @@ function renderLensFilters() {
   allButton.addEventListener("click", () => {
     state.activeLensId = null;
     state.scenarioToolIds = [];
+    trackUsage("lens_filter", { lens_id: "all" });
     renderLensFilters();
     renderTools();
   });
@@ -2654,6 +2766,7 @@ function renderLensFilters() {
     button.addEventListener("click", () => {
       state.activeLensId = state.activeLensId === lens.id ? null : lens.id;
       state.scenarioToolIds = [];
+      trackUsage("lens_filter", { lens_id: state.activeLensId || "all" });
       renderLensFilters();
       renderTools();
     });
@@ -2751,6 +2864,12 @@ function renderTools() {
     });
 
     fragment.querySelector(".card-button").addEventListener("click", () => {
+      trackUsage("tool_open", {
+        tool_id: tool.id,
+        source_id: tool.sourceId,
+        lens_id: tool.lensId,
+      });
+
       if (tool.kind === "ls") {
         openLsDrawer(tool.id);
         return;
@@ -2862,10 +2981,20 @@ function openDrawer(toolId) {
   `;
 
   const relatedSourceButton = detailContent.querySelector("[data-related-source]");
+  const sourceLink = detailContent.querySelector(".detail-link-primary[href]");
+  sourceLink?.addEventListener("click", () => {
+    trackUsage("source_link_click", {
+      tool_id: tool.id,
+      source_id: tool.sourceId,
+      lens_id: tool.lensId,
+    });
+  });
+
   relatedSourceButton.addEventListener("click", () => {
     state.activeSourceId = tool.sourceId;
     state.activeLensId = null;
     state.scenarioToolIds = [];
+    trackUsage("source_filter", { source_id: tool.sourceId });
     renderSourceFilters();
     renderLensFilters();
     renderTools();
@@ -2877,6 +3006,7 @@ function openDrawer(toolId) {
   relatedLensButton.addEventListener("click", () => {
     state.activeLensId = tool.lensId;
     state.scenarioToolIds = [];
+    trackUsage("lens_filter", { lens_id: tool.lensId });
     renderLensFilters();
     renderTools();
     closeDrawerPanel();
@@ -2934,9 +3064,11 @@ openRecommended.addEventListener("click", () => {
   renderSourceFilters();
   renderLensFilters();
   renderTools();
+  trackUsage("recommended_mix_open", { item_count: state.scenarioToolIds.length });
   document.querySelector("#toolbox").scrollIntoView({ behavior: "smooth" });
 });
 
+initAnalyticsConsent();
 populateScenarios();
 populateLenses();
 populateManifestoHotspots();
