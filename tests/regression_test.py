@@ -108,6 +108,27 @@ class StaticAppRegressionTests(unittest.TestCase):
         self.assertIn("searchTokens.every", body)
         self.assertNotIn(".includes(normalizedSearch)", body)
 
+    def test_source_file_links_use_team_tiger_workmaterial_path(self):
+        body = self._function_body("getScaniaSourceFileUrl")
+
+        self.assertIn("/:w:/r", body)
+        self.assertIn("/teams/AgileScania/Shared Documents", self.app)
+        self.assertIn("Team Tiger Workmaterial", self.app)
+        self.assertIn("csf=1", body)
+        self.assertIn("web=1", body)
+        self.assertNotIn("Servant Leadership 2.0 Master", body)
+
+    def test_source_file_tools_can_override_with_exact_sharepoint_link(self):
+        body = self._function_body("openDrawer")
+        inclusion_block = re.search(
+            r'id: "inclusion-nudges",[\s\S]*?sourceFile: "Tools and practisies/Inclusion Nudges',
+            self.app,
+        )
+
+        self.assertIsNotNone(inclusion_block)
+        self.assertIn("tool.sourceUrl || getScaniaSourceFileUrl(tool.sourceFile)", body)
+        self.assertIn("d=w09d99542179a489ab920036056f04601", inclusion_block.group(0))
+
     def _function_body(self, name):
         start = self.app.index(f"function {name}(")
         brace_start = self.app.index("{", start)

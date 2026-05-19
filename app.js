@@ -11,6 +11,24 @@ const sources = [
   },
 ];
 
+const scaniaSharePointOrigin = "https://scaniaazureservices.sharepoint.com";
+const scaniaSourceServerRoot =
+  "/teams/AgileScania/Shared Documents/Servant Leadership/Team Tiger Workmaterial";
+
+function getScaniaSourceFileUrl(sourceFile) {
+  if (!sourceFile) {
+    return null;
+  }
+
+  const sourcePath = `${scaniaSourceServerRoot}/${sourceFile}`;
+  const encodedPath = sourcePath
+    .split("/")
+    .map((part) => encodeURIComponent(part))
+    .join("/");
+
+  return `${scaniaSharePointOrigin}/:w:/r${encodedPath}?csf=1&web=1`;
+}
+
 const lenses = [
   {
     id: "align",
@@ -122,7 +140,15 @@ const manifestoPrinciples = [
       "Growth becomes part of the team culture. People feel safe to make mistakes. Continuous improvement feels real, not theoretical. Retros is part of the feedbackloops.",
     toolsText:
       "👉 Feedback Canvas, Retro, Learning Logs, “What I’m Unlearning” Team Wall",
-    relatedToolIds: ["retros-prompts", "ls-w3", "ls-appreciative-interviews"],
+    relatedToolIds: [
+      "feedback-canvas",
+      "retro",
+      "learning-logs",
+      "unlearning-team-wall",
+      "retros-prompts",
+      "ls-w3",
+      "ls-appreciative-interviews",
+    ],
   },
   {
     id: "cultural-ambassador",
@@ -137,7 +163,14 @@ const manifestoPrinciples = [
       "Culture by Design - Our culture becomes intentional, not accidental.\nPeople feel they belong, can contribute fully, and trust the environment.\nTeams thrive across boundaries, backgrounds, and differences.",
     toolsText:
       "🧰 Culture Toolbox, Culture Connect Game Cultural Check-ins, Inclusion Nudges, Team Agreements, Retros with “culture lens,” Scania Core Values cards",
-    relatedToolIds: ["ls-conversation-cafe", "ls-hsr", "ls-social-network-webbing"],
+    relatedToolIds: [
+      "inclusion-nudges",
+      "team-agreements",
+      "retros-culture-lens",
+      "ls-conversation-cafe",
+      "ls-hsr",
+      "ls-social-network-webbing",
+    ],
   },
   {
     id: "psychological-safety",
@@ -152,7 +185,14 @@ const manifestoPrinciples = [
       "More diverse ideas surface. Problems are addressed earlier. Team morale and collaboration improve between people, teams and cultures.",
     toolsText:
       "👉 Psychological Safety Pulse Survey, “Red Flag Round” in dailies, Retros with “What I didn’t say” rounds",
-    relatedToolIds: ["ls-1-2-4-all", "ls-hsr", "ls-conversation-cafe"],
+    relatedToolIds: [
+      "psychological-safety-pulse",
+      "red-flag-round",
+      "retros-what-i-didnt-say",
+      "ls-1-2-4-all",
+      "ls-hsr",
+      "ls-conversation-cafe",
+    ],
   },
   {
     id: "empathy-intent",
@@ -167,7 +207,15 @@ const manifestoPrinciples = [
       "Less friction and more trust and authenticity in communication and relations. Greater psychological safety. Team members feel respected and aligned.",
     toolsText:
       "👉 Ladder of Inference, Empathy Interviews, Intent Clarity Framework (“My intent is…”) X and Y leadership",
-    relatedToolIds: ["ls-hsr", "intent-briefs", "ls-appreciative-interviews"],
+    relatedToolIds: [
+      "empathy-interviews",
+      "ladder-of-inference",
+      "intent-clarity-framework",
+      "x-y-leadership",
+      "ls-hsr",
+      "intent-briefs",
+      "ls-appreciative-interviews",
+    ],
   },
 ];
 
@@ -1139,6 +1187,587 @@ const tools = [
     sourceUrl:
       "https://liberatingstructures.info/liberating-structure/what-i-need-from-you/",
   },
+  {
+    id: "red-flag-round",
+    title: "Red Flag Round in Dailies",
+    sourceId: "scania",
+    lensId: "situational",
+    time: "2-5 min",
+    summary:
+      "Create a short, safe daily habit for raising concerns, risks, blockers, or tensions before they grow.",
+    signal:
+      "Best when risks, dependencies, or workload concerns are noticed too late or people hesitate to speak up.",
+    unlocks: [
+      "Earlier visibility of challenges and risks",
+      "A culture where speaking up is normalized",
+      "Faster support and collaboration across the team",
+    ],
+    useWhen: [
+      "In daily stand-ups or recurring team check-ins",
+      "During high-pressure periods or complex work",
+      "When coordination across people or functions is critical",
+    ],
+    steps: [
+      "Ask a simple red-flag prompt during the daily check-in.",
+      "Let each person share risks, blockers, or support needs briefly.",
+      "Capture major risks that need follow-up.",
+      "Separate quick awareness from deeper problem-solving or escalation.",
+    ],
+    facilitation: [
+      "Frame red flags as useful signals, not negativity or failure.",
+      "Keep the round lightweight and recurring.",
+      "Thank people for raising concerns and model openness yourself.",
+    ],
+    goodFor: ["psychological safety", "risk", "daily routines", "transparency"],
+    questions: [
+      "Any risks, blockers, or concerns we should know about today?",
+      "What needs follow-up outside this meeting?",
+      "What support would help us act early?",
+    ],
+    quote: "Red flags are useful signals when the team learns to raise them early.",
+    sourceLabel: "Open source file",
+    sourceFile:
+      "Tools and practisies/“Red Flag Round” in Dailies (I Cultivate Psychological Safety).docx",
+  },
+  {
+    id: "empathy-interviews",
+    title: "Empathy Interviews",
+    sourceId: "scania",
+    lensId: "situational",
+    time: "30-60 min",
+    summary:
+      "Build deeper understanding of another person's experiences, needs, emotions, and perspectives through active listening.",
+    signal:
+      "Best when assumptions, tension, culture gaps, or role differences are blocking collaboration.",
+    unlocks: [
+      "Stronger empathy and human connection",
+      "Better understanding of different perspectives and experiences",
+      "More inclusive collaboration and decision-making",
+    ],
+    useWhen: [
+      "During team development or culture work",
+      "Before designing solutions, processes, or changes",
+      "When misunderstandings, tension, or assumptions exist",
+    ],
+    steps: [
+      "Set the intention that the interview is for understanding, not solving.",
+      "Let one person share while the other listens actively.",
+      "Ask open questions and reflect back what you hear.",
+      "Switch roles and close with shared insights.",
+    ],
+    facilitation: [
+      "Protect confidentiality, respect, and active listening.",
+      "Keep the focus on themes and learnings, not personal exposure.",
+      "Acknowledge openness and vulnerability at the close.",
+    ],
+    goodFor: ["empathy", "trust", "culture", "listening"],
+    questions: [
+      "What has felt energizing or challenging lately?",
+      "What helps you feel included and supported?",
+      "What assumptions do people often make that may not be accurate?",
+    ],
+    quote: "The goal is understanding, not agreement or immediate solutions.",
+    sourceLabel: "Open source file",
+    sourceFile: "Tools and practisies/Empathy Interviews (I Lead With Empathy and Intent).docx",
+  },
+  {
+    id: "feedback-canvas",
+    title: "Feedback Canvas",
+    sourceId: "scania",
+    lensId: "situational",
+    time: "60-90 min",
+    summary:
+      "Make feedback clear, safe, and actionable by moving from vague opinions into structured growth dialogue.",
+    signal:
+      "Best when feedback is avoided, unclear, emotional, or not converted into behavior change.",
+    unlocks: [
+      "Psychological safety in giving and receiving feedback",
+      "Clarity on behaviors and impact",
+      "A shared language for feedback across teams",
+    ],
+    useWhen: [
+      "Feedback is avoided, unclear, or not acted upon",
+      "Teams need to improve collaboration and behaviors",
+      "There is tension or misunderstanding",
+    ],
+    steps: [
+      "Describe the situation factually.",
+      "Describe the observed behavior without interpretation.",
+      "Explain the impact on you, the team, or the outcome.",
+      "Share appreciation or concern and invite dialogue.",
+    ],
+    facilitation: [
+      "Introduce feedback as a tool for growth.",
+      "Explain the difference between judgment and constructive feedback.",
+      "Intervene if feedback becomes judgmental.",
+    ],
+    goodFor: ["feedback", "growth", "trust", "1:1"],
+    questions: [
+      "What happened?",
+      "What did you observe?",
+      "How did it affect you, the team, or the outcome?",
+    ],
+    quote: "How can my feedback help you grow and succeed?",
+    sourceLabel: "Open source file",
+    sourceFile: "Tools and practisies/Feedback canvas (I am a role model for growth).docx",
+  },
+  {
+    id: "inclusion-nudges",
+    title: "Inclusion Nudges",
+    sourceId: "scania",
+    lensId: "gamechanger",
+    time: "15-45 min",
+    summary:
+      "Make inclusive behavior easier in everyday work through small prompts, reminders, and design choices.",
+    signal:
+      "Best when inclusive intent exists but everyday behaviors still leave voices or perspectives out.",
+    unlocks: [
+      "Small, consistent behavior changes that improve inclusion over time",
+      "More equal participation and voice in teams",
+      "Shared responsibility for inclusion",
+    ],
+    useWhen: [
+      "In meetings, decision-making, and discussions",
+      "To address recurring behaviors such as interruptions, dominance, or silence",
+      "When awareness exists but behavior has not changed",
+    ],
+    steps: [
+      "Identify a real inclusion challenge.",
+      "Define one or two target behaviors.",
+      "Add a simple nudge to meetings, templates, or team routines.",
+      "Test, reflect, and adjust the nudge over time.",
+    ],
+    facilitation: [
+      "Keep nudges simple, visible, and actionable.",
+      "Co-create nudges with the team.",
+      "Treat nudges as experiments and revisit them in retrospectives.",
+    ],
+    goodFor: ["inclusion", "culture", "meetings", "participation"],
+    questions: [
+      "Where are we unintentionally excluding perspectives?",
+      "What perspectives might we be missing?",
+      "What small change would make inclusion easier in the moment?",
+    ],
+    quote: "Inclusion shifts from what we believe to what we actually do.",
+    sourceLabel: "Open source file",
+    sourceUrl:
+      "https://scaniaazureservices.sharepoint.com/:w:/r/teams/AgileScania/Shared%20Documents/Servant%20Leadership/Team%20Tiger%20Workmaterial/Tools%20and%20practisies/Inclusion%20Nudges%20(I%20am%20a%20Cultural%20Ambassador).docx?d=w09d99542179a489ab920036056f04601&csf=1&web=1&e=3SKUfM",
+    sourceFile: "Tools and practisies/Inclusion Nudges (I am a Cultural Ambassador).docx",
+  },
+  {
+    id: "intent-clarity-framework",
+    title: "Intent Clarity Framework",
+    sourceId: "scania",
+    lensId: "situational",
+    time: "20-45 min",
+    summary:
+      "Make intentions explicit before speaking, giving feedback, asking questions, or making decisions.",
+    signal:
+      "Best when conversations carry emotional weight or when messages are easily interpreted as blame.",
+    unlocks: [
+      "Reduced misunderstandings and defensiveness",
+      "Greater trust and psychological safety",
+      "Clearer communication and expectations",
+    ],
+    useWhen: [
+      "During feedback or difficult conversations",
+      "In meetings where alignment or tension is important",
+      "During conflict resolution or coaching conversations",
+    ],
+    steps: [
+      "Pause before communicating.",
+      "Clarify your intention using the phrase: My intent is...",
+      "Communicate the message with that intent visible.",
+      "Reflect on how clarified intent changed the conversation.",
+    ],
+    facilitation: [
+      "Model the phrase yourself in real situations.",
+      "Keep it authentic rather than mechanical.",
+      "Acknowledge that impact still matters even when intent is good.",
+    ],
+    goodFor: ["intent", "communication", "feedback", "trust"],
+    questions: [
+      "What is my intent in saying this?",
+      "How might this message be interpreted?",
+      "How did clarified intent change the conversation?",
+    ],
+    quote: "My intent is to raise a concern early so we can solve it together.",
+    sourceLabel: "Open source file",
+    sourceFile:
+      "Tools and practisies/Intent Clarity Framework (My Intent Is...) -  (I Lead With Empathy and Intent).docx",
+  },
+  {
+    id: "ladder-of-inference",
+    title: "Ladder of Inference",
+    sourceId: "scania",
+    lensId: "situational",
+    time: "30-60 min",
+    summary:
+      "Slow down assumptions, interpretations, and conclusions so teams can inquire before reacting.",
+    signal:
+      "Best when misunderstandings, premature conclusions, or tension are shaping decisions and behavior.",
+    unlocks: [
+      "More reflective and conscious decision-making",
+      "Reduced misunderstandings and premature conclusions",
+      "Greater curiosity and perspective-taking",
+    ],
+    useWhen: [
+      "During conflict or tension",
+      "When assumptions are driving decisions",
+      "When teams need better dialogue and shared understanding",
+    ],
+    steps: [
+      "Name the situation or data everyone is observing.",
+      "Identify interpretations and assumptions being added.",
+      "Test conclusions by asking what else could be true.",
+      "Agree what the team has learned and what to do next.",
+    ],
+    facilitation: [
+      "Invite curiosity before judgment.",
+      "Separate observable data from interpretation.",
+      "Help the team climb back down the ladder before deciding.",
+    ],
+    goodFor: ["assumptions", "conflict", "dialogue", "reflection"],
+    questions: [
+      "What did we actually observe?",
+      "What assumptions are we adding?",
+      "What else could explain this situation?",
+    ],
+    quote: "Move from automatic reactions to thoughtful inquiry.",
+    sourceLabel: "Open source file",
+    sourceFile: "Tools and practisies/Ladder of Inference (I Lead With Empathy and Intent).docx",
+  },
+  {
+    id: "learning-logs",
+    title: "Learning Logs",
+    sourceId: "scania",
+    lensId: "situational",
+    time: "10-30 min",
+    summary:
+      "Turn everyday experiences, successes, failures, and experiments into visible learning for individuals and teams.",
+    signal:
+      "Best when teams repeat mistakes, lose insights, or need to normalize reflection during change.",
+    unlocks: [
+      "A culture where learning is valued over perfection",
+      "Faster adaptation through captured insights",
+      "Collective intelligence from individual lessons",
+    ],
+    useWhen: [
+      "Teams are navigating change, uncertainty, or experimentation",
+      "You want to capture lessons before they disappear",
+      "Individuals are working on growth goals",
+    ],
+    steps: [
+      "Create a simple recurring learning-log format.",
+      "Capture what happened, what was learned, and what to try next.",
+      "Invite optional sharing of patterns and insights.",
+      "Review logs periodically to strengthen team learning.",
+    ],
+    facilitation: [
+      "Make reflection lightweight and recurring.",
+      "Normalize learning from mistakes.",
+      "Focus on insights and next experiments, not reporting.",
+    ],
+    goodFor: ["learning", "reflection", "growth", "experiments"],
+    questions: [
+      "What did I learn?",
+      "What would I do differently next time?",
+      "What pattern should the team notice?",
+    ],
+    quote: "Individual lessons become team assets when learning is made visible.",
+    sourceLabel: "Open source file",
+    sourceFile: "Tools and practisies/Learning Logs (I am a Role Model for Growth).docx",
+  },
+  {
+    id: "psychological-safety-pulse",
+    title: "Psychological Safety Pulse Survey",
+    sourceId: "scania",
+    lensId: "situational",
+    time: "15-45 min",
+    summary:
+      "Help teams understand how safe people feel to speak up, share ideas, ask questions, and take interpersonal risks.",
+    signal:
+      "Best when team climate, trust, participation, or openness needs to become discussable and improvable.",
+    unlocks: [
+      "Early visibility of team dynamics and trust levels",
+      "Honest conversations about inclusion, learning, and collaboration",
+      "Shared ownership of psychological safety within the team",
+    ],
+    useWhen: [
+      "You want a quick read on team safety and trust",
+      "Problems or concerns are not surfacing early",
+      "The team wants to improve how people speak up and learn together",
+    ],
+    steps: [
+      "Run a short pulse survey with psychological-safety questions.",
+      "Review patterns, not individual answers.",
+      "Discuss what the results suggest about the team's working climate.",
+      "Agree one or two small improvements to test.",
+    ],
+    facilitation: [
+      "Protect anonymity where needed.",
+      "Frame the survey as learning, not evaluation.",
+      "Translate insights into small actions the team owns.",
+    ],
+    goodFor: ["psychological safety", "survey", "trust", "team health"],
+    questions: [
+      "How safe do people feel to speak up?",
+      "What patterns are visible in the responses?",
+      "What small change would strengthen safety next?",
+    ],
+    quote: "Psychological safety becomes something the team can reflect on and strengthen together.",
+    sourceLabel: "Open source file",
+    sourceFile:
+      "Tools and practisies/Psychological Safety Pulse Survey (I Cultivate Psychological Safety).docx",
+  },
+  {
+    id: "retro",
+    title: "Retrospectives (Retro)",
+    sourceId: "scania",
+    lensId: "situational",
+    time: "45-90 min",
+    summary:
+      "Create a structured space for teams to pause, reflect, learn together, and turn experience into action.",
+    signal:
+      "Best when a team needs continuous improvement, shared reflection, or stronger ownership of how it works.",
+    unlocks: [
+      "Continuous learning and improvement",
+      "Greater ownership and team accountability",
+      "Open dialogue about successes and challenges",
+    ],
+    useWhen: [
+      "After a sprint, project phase, incident, or important event",
+      "When collaboration patterns need attention",
+      "When the team needs practical improvement actions",
+    ],
+    steps: [
+      "Set the stage and clarify the purpose.",
+      "Reflect individually before discussion.",
+      "Share and cluster insights.",
+      "Prioritize one to three realistic improvements or experiments.",
+    ],
+    facilitation: [
+      "Keep the space safe and blame-free.",
+      "Focus on behaviors and systems, not individuals.",
+      "Close with clear ownership and a revisit point.",
+    ],
+    goodFor: ["retrospective", "learning", "improvement", "teamwork"],
+    questions: [
+      "What went well?",
+      "What could improve?",
+      "What action will we try next?",
+    ],
+    quote: "The goal is not to solve everything, but to identify meaningful improvements together.",
+    sourceLabel: "Open source file",
+    sourceFile: "Tools and practisies/Retro (I am a Role Model for Growth).docx",
+  },
+  {
+    id: "retros-culture-lens",
+    title: "Retros with Culture Lens",
+    sourceId: "scania",
+    lensId: "gamechanger",
+    time: "45-90 min",
+    summary:
+      "Add a culture-focused layer to an existing retrospective to reflect on inclusion, trust, and collaboration behaviors.",
+    signal:
+      "Best when the team wants to improve not only delivery, but how people work together.",
+    unlocks: [
+      "Visible culture patterns in everyday work",
+      "More inclusive and trust-building team conversations",
+      "Actions on both performance and collaboration",
+    ],
+    useWhen: [
+      "After retrospectives reveal recurring collaboration issues",
+      "When voices, inclusion, or trust need attention",
+      "During culture development or team reset work",
+    ],
+    steps: [
+      "Keep the usual retro structure.",
+      "Add one or two culture-focused prompts.",
+      "Reflect silently before sharing.",
+      "Translate insights into small experiments for how the team works together.",
+    ],
+    facilitation: [
+      "Focus on behaviors, not individuals.",
+      "Assume positive intent and keep the conversation constructive.",
+      "Do not overload the retro with too many culture prompts.",
+    ],
+    goodFor: ["culture", "retro", "inclusion", "trust"],
+    questions: [
+      "When did we feel most or least included?",
+      "Whose voices were heard, and whose were missing?",
+      "What behaviors helped or hindered collaboration?",
+    ],
+    quote: "Reflect on how we collaborated, not just what we delivered.",
+    sourceLabel: "Open source file",
+    sourceFile: "Tools and practisies/Retros with culture lens (I am a Cultural Ambassador).docx",
+  },
+  {
+    id: "retros-what-i-didnt-say",
+    title: "Retros with What I Didn't Say Rounds",
+    sourceId: "scania",
+    lensId: "situational",
+    time: "5-20 min",
+    summary:
+      "Create intentional space for unspoken thoughts, concerns, ideas, or perspectives at the end of a reflection.",
+    signal:
+      "Best when participation has felt guarded or you sense important perspectives have not surfaced.",
+    unlocks: [
+      "Deeper honesty and reflection within the team",
+      "Awareness of hidden tensions, assumptions, or missed perspectives",
+      "More balanced participation and voice",
+    ],
+    useWhen: [
+      "During retrospectives or reflection sessions",
+      "After difficult discussions, projects, or high-pressure periods",
+      "When working on trust and psychological safety",
+    ],
+    steps: [
+      "Set the invitation clearly and make sharing voluntary.",
+      "Allow silent reflection first.",
+      "Invite people to share anything still unsaid.",
+      "Acknowledge what is shared without debating or solving immediately.",
+    ],
+    facilitation: [
+      "Protect trust above all else.",
+      "Normalize that everyone sometimes holds back thoughts.",
+      "Close by asking what the team learned and should bring forward.",
+    ],
+    goodFor: ["psychological safety", "retro", "voice", "reflection"],
+    questions: [
+      "What is something you didn't say earlier that feels important now?",
+      "Is there a perspective, concern, or idea still unspoken?",
+      "What did you hesitate to bring up?",
+    ],
+    quote: "This is an invitation, not an obligation.",
+    sourceLabel: "Open source file",
+    sourceFile:
+      "Tools and practisies/Retros with What I Didn't Say Rounds (I Cultivate Psychological Safety).docx",
+  },
+  {
+    id: "team-agreements",
+    title: "Team Agreements",
+    sourceId: "scania",
+    lensId: "gamechanger",
+    time: "45-90 min",
+    summary:
+      "Make expectations explicit and shared by co-creating the behaviors the team wants to live by.",
+    signal:
+      "Best when assumptions, friction, hidden expectations, or new-team formation require clearer working norms.",
+    unlocks: [
+      "A stronger sense of belonging through co-created norms",
+      "Psychological safety by reducing ambiguity",
+      "Ownership of team culture created by the team",
+    ],
+    useWhen: [
+      "When forming a new team or onboarding new members",
+      "At the start of projects or new ways of working",
+      "When friction, misunderstandings, or misalignment appear",
+    ],
+    steps: [
+      "Set the intention for shared commitments.",
+      "Explore what helps people do their best work.",
+      "Cluster and refine ideas into clear observable behaviors.",
+      "Make agreements visible and revisit them regularly.",
+    ],
+    facilitation: [
+      "Keep the agreement set short and specific.",
+      "Test whether the team would notice if an agreement was not being lived.",
+      "Help the team move from ideas to clear behaviors.",
+    ],
+    goodFor: ["team norms", "culture", "collaboration", "belonging"],
+    questions: [
+      "What helps you do your best work?",
+      "What creates frustration or friction?",
+      "What do we need more or less of as a team?",
+    ],
+    quote: "How we work becomes visible, intentional, and lived.",
+    sourceLabel: "Open source file",
+    sourceFile: "Tools and practisies/Team Agreements (I am a Cultural Ambassador).docx",
+  },
+  {
+    id: "unlearning-team-wall",
+    title: "What I'm Unlearning Team Wall",
+    sourceId: "scania",
+    lensId: "situational",
+    time: "20-60 min",
+    summary:
+      "Make it safe and visible to let go of outdated habits, beliefs, or ways of working that no longer serve the team.",
+    signal:
+      "Best when old habits, hidden norms, or legacy thinking are limiting progress during change.",
+    unlocks: [
+      "A culture where change is actively embraced",
+      "Psychological safety through vulnerability and honesty",
+      "Collective courage to let go of outdated patterns",
+    ],
+    useWhen: [
+      "The team is going through change or transformation",
+      "Old habits or the way we have always done it are limiting progress",
+      "During retrospectives, team resets, or culture workshops",
+    ],
+    steps: [
+      "Frame unlearning as a strength.",
+      "Invite individuals to write what they are unlearning and what they are trying instead.",
+      "Place entries on a shared wall or digital board.",
+      "Look for themes and anchor new team-level behaviors.",
+    ],
+    facilitation: [
+      "Lead by example with your own unlearning.",
+      "Keep sharing voluntary and allow anonymity if needed.",
+      "Protect the space from criticism or debate.",
+    ],
+    goodFor: ["growth", "unlearning", "change", "psychological safety"],
+    questions: [
+      "What habit or belief is holding you or us back?",
+      "What are you ready to let go of?",
+      "What will we do instead?",
+    ],
+    quote: "What should we stop or let go of?",
+    sourceLabel: "Open source file",
+    sourceFile:
+      "Tools and practisies/What I'm Unlearning Team Wall (I am a Role Model for Growth).docx",
+  },
+  {
+    id: "x-y-leadership",
+    title: "Theory X and Theory Y Leadership",
+    sourceId: "scania",
+    lensId: "situational",
+    time: "30-60 min",
+    summary:
+      "Reflect on assumptions about people, motivation, responsibility, and work so leadership choices become more intentional.",
+    signal:
+      "Best when a team wants to discuss empowerment, control, trust, ownership, or leadership mindset.",
+    unlocks: [
+      "Greater awareness of leadership mindset and behavior",
+      "Dialogue about empowerment, autonomy, and accountability",
+      "Understanding of how leadership style impacts motivation and belonging",
+    ],
+    useWhen: [
+      "In leadership development or team workshops",
+      "During discussions about culture and ways of working",
+      "When exploring empowerment, ownership, or trust",
+    ],
+    steps: [
+      "Introduce Theory X and Theory Y neutrally.",
+      "Explore assumptions the team recognizes in everyday work.",
+      "Connect assumptions to meetings, decision-making, feedback, and autonomy.",
+      "Identify leadership behaviors the team wants to strengthen.",
+    ],
+    facilitation: [
+      "Avoid labeling people as X or Y.",
+      "Focus on behaviors and systems under pressure.",
+      "Translate reflection into concrete leadership choices.",
+    ],
+    goodFor: ["leadership", "mindset", "trust", "empowerment"],
+    questions: [
+      "What assumptions about people do we recognize?",
+      "When do we become more controlling or more trusting?",
+      "What leadership behaviors do we want to strengthen?",
+    ],
+    quote: "The purpose is not to label leaders, but to increase awareness and intentionality.",
+    sourceLabel: "Open source file",
+    sourceFile: "Tools and practisies/X and Y Leadership (I Lead with Empathy and Intent).docx",
+  },
 ];
 
 const state = {
@@ -2108,12 +2737,20 @@ function openDrawer(toolId) {
     return;
   }
 
+  const resolvedSourceUrl =
+    tool.sourceId === "scania" && tool.sourceFile
+      ? tool.sourceUrl || getScaniaSourceFileUrl(tool.sourceFile)
+      : tool.sourceUrl;
+  const resolvedSourceLabel =
+    tool.sourceId === "scania" && tool.sourceFile
+      ? "Open source file"
+      : tool.sourceLabel || "Open source material";
   const sourceAction =
-    tool.sourceId === "liberating-structures"
+    tool.sourceId === "liberating-structures" || !resolvedSourceUrl
       ? ""
       : `
-      <a class="detail-link detail-link-primary" href="${tool.sourceUrl}" target="_blank" rel="noreferrer">
-        ${tool.sourceLabel}
+      <a class="detail-link detail-link-primary" href="${resolvedSourceUrl}" target="_blank" rel="noreferrer">
+        ${resolvedSourceLabel}
       </a>
     `;
 
@@ -2164,6 +2801,17 @@ function openDrawer(toolId) {
         ${tool.questions.map((item) => `<li>${item}</li>`).join("")}
       </ul>
     </section>
+
+    ${
+      tool.sourceFile
+        ? `
+        <section class="detail-section">
+          <h4>Original Source File</h4>
+          <p class="detail-copy detail-source-text">${escapeHtml(tool.sourceFile)}</p>
+        </section>
+      `
+        : ""
+    }
 
     <section class="detail-section">
       <h4>Core Question</h4>
