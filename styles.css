@@ -487,42 +487,82 @@ h3 {
   color: #fff;
 }
 
-.filter-chip[data-lens="align"] {
+.filter-chip[data-lens="align-why-what"] {
   border-color: rgba(212, 191, 136, 0.8);
 }
 
-.filter-chip[data-lens="situational"] {
+.filter-chip[data-lens="situational-leader"] {
   border-color: rgba(53, 111, 196, 0.5);
 }
 
-.filter-chip[data-lens="gamechanger"] {
+.filter-chip[data-lens="game-changer"] {
   border-color: rgba(239, 100, 8, 0.55);
 }
 
-.filter-chip[data-lens="system"] {
+.filter-chip[data-lens="whole-system"] {
   border-color: rgba(121, 137, 168, 0.6);
 }
 
-.filter-chip.active[data-lens="align"] {
+.filter-chip[data-lens="growth-role-model"] {
+  border-color: rgba(217, 15, 47, 0.42);
+}
+
+.filter-chip[data-lens="cultural-ambassador"] {
+  border-color: rgba(150, 87, 28, 0.55);
+}
+
+.filter-chip[data-lens="psychological-safety"] {
+  border-color: rgba(115, 166, 207, 0.72);
+}
+
+.filter-chip[data-lens="empathy-intent"] {
+  border-color: rgba(13, 141, 114, 0.5);
+}
+
+.filter-chip.active[data-lens="align-why-what"] {
   background: var(--manifesto-beige);
   border-color: #b3995d;
 }
 
-.filter-chip.active[data-lens="situational"] {
+.filter-chip.active[data-lens="situational-leader"] {
   background: var(--manifesto-blue);
   border-color: #2b5aa0;
   color: #fff;
 }
 
-.filter-chip.active[data-lens="gamechanger"] {
+.filter-chip.active[data-lens="game-changer"] {
   background: var(--manifesto-orange);
   border-color: #c95409;
   color: #fff;
 }
 
-.filter-chip.active[data-lens="system"] {
+.filter-chip.active[data-lens="whole-system"] {
   background: var(--manifesto-slate);
   border-color: #667693;
+  color: #fff;
+}
+
+.filter-chip.active[data-lens="growth-role-model"] {
+  background: var(--manifesto-red);
+  border-color: #b70f29;
+  color: #fff;
+}
+
+.filter-chip.active[data-lens="cultural-ambassador"] {
+  background: var(--manifesto-brown);
+  border-color: #744113;
+  color: #fff;
+}
+
+.filter-chip.active[data-lens="psychological-safety"] {
+  background: var(--manifesto-sky);
+  border-color: #4f87b5;
+  color: var(--scania-blue-deep);
+}
+
+.filter-chip.active[data-lens="empathy-intent"] {
+  background: var(--manifesto-green);
+  border-color: #0a6e59;
   color: #fff;
 }
 
@@ -641,20 +681,36 @@ h3 {
   background: var(--accent-soft);
 }
 
-.scenario-chip[data-lens="align"] {
+.scenario-chip[data-lens="align-why-what"] {
   border-left-color: var(--manifesto-gold);
 }
 
-.scenario-chip[data-lens="situational"] {
+.scenario-chip[data-lens="situational-leader"] {
   border-left-color: var(--manifesto-blue);
 }
 
-.scenario-chip[data-lens="gamechanger"] {
+.scenario-chip[data-lens="game-changer"] {
   border-left-color: var(--manifesto-orange);
 }
 
-.scenario-chip[data-lens="system"] {
+.scenario-chip[data-lens="whole-system"] {
   border-left-color: var(--manifesto-slate);
+}
+
+.scenario-chip[data-lens="growth-role-model"] {
+  border-left-color: var(--manifesto-red);
+}
+
+.scenario-chip[data-lens="cultural-ambassador"] {
+  border-left-color: var(--manifesto-brown);
+}
+
+.scenario-chip[data-lens="psychological-safety"] {
+  border-left-color: var(--manifesto-sky);
+}
+
+.scenario-chip[data-lens="empathy-intent"] {
+  border-left-color: var(--manifesto-green);
 }
 
 .ls-card {
@@ -779,20 +835,36 @@ h3 {
   background: #fff;
 }
 
-.tool-card[data-lens="align"] {
+.tool-card[data-lens="align-why-what"] {
   background: linear-gradient(180deg, rgba(229, 177, 0, 0.07), #ffffff 72%);
 }
 
-.tool-card[data-lens="situational"] {
+.tool-card[data-lens="situational-leader"] {
   background: linear-gradient(180deg, rgba(53, 111, 196, 0.07), #ffffff 72%);
 }
 
-.tool-card[data-lens="gamechanger"] {
+.tool-card[data-lens="game-changer"] {
   background: linear-gradient(180deg, rgba(239, 100, 8, 0.07), #ffffff 72%);
 }
 
-.tool-card[data-lens="system"] {
+.tool-card[data-lens="whole-system"] {
   background: linear-gradient(180deg, rgba(121, 137, 168, 0.07), #ffffff 72%);
+}
+
+.tool-card[data-lens="growth-role-model"] {
+  background: linear-gradient(180deg, rgba(217, 15, 47, 0.06), #ffffff 72%);
+}
+
+.tool-card[data-lens="cultural-ambassador"] {
+  background: linear-gradient(180deg, rgba(150, 87, 28, 0.07), #ffffff 72%);
+}
+
+.tool-card[data-lens="psychological-safety"] {
+  background: linear-gradient(180deg, rgba(115, 166, 207, 0.11), #ffffff 72%);
+}
+
+.tool-card[data-lens="empathy-intent"] {
+  background: linear-gradient(180deg, rgba(13, 141, 114, 0.07), #ffffff 72%);
 }
 
 .tool-card::before,
@@ -806,40 +878,76 @@ h3 {
   background: var(--scania-blue-soft);
 }
 
-.lens-card[data-lens="align"]::before,
-.tool-card[data-lens="align"]::before {
+.lens-card[data-lens="align-why-what"]::before,
+.tool-card[data-lens="align-why-what"]::before {
   background: var(--manifesto-gold);
 }
 
-.lens-card[data-lens="situational"]::before,
-.tool-card[data-lens="situational"]::before {
+.lens-card[data-lens="situational-leader"]::before,
+.tool-card[data-lens="situational-leader"]::before {
   background: var(--manifesto-blue);
 }
 
-.lens-card[data-lens="gamechanger"]::before,
-.tool-card[data-lens="gamechanger"]::before {
+.lens-card[data-lens="game-changer"]::before,
+.tool-card[data-lens="game-changer"]::before {
   background: var(--manifesto-orange);
 }
 
-.lens-card[data-lens="system"]::before,
-.tool-card[data-lens="system"]::before {
+.lens-card[data-lens="whole-system"]::before,
+.tool-card[data-lens="whole-system"]::before {
   background: var(--manifesto-slate);
 }
 
-.lens-card[data-lens="align"] {
+.lens-card[data-lens="growth-role-model"]::before,
+.tool-card[data-lens="growth-role-model"]::before {
+  background: var(--manifesto-red);
+}
+
+.lens-card[data-lens="cultural-ambassador"]::before,
+.tool-card[data-lens="cultural-ambassador"]::before {
+  background: var(--manifesto-brown);
+}
+
+.lens-card[data-lens="psychological-safety"]::before,
+.tool-card[data-lens="psychological-safety"]::before {
+  background: var(--manifesto-sky);
+}
+
+.lens-card[data-lens="empathy-intent"]::before,
+.tool-card[data-lens="empathy-intent"]::before {
+  background: var(--manifesto-green);
+}
+
+.lens-card[data-lens="align-why-what"] {
   background: linear-gradient(180deg, rgba(229, 177, 0, 0.08), #ffffff 62%);
 }
 
-.lens-card[data-lens="situational"] {
+.lens-card[data-lens="situational-leader"] {
   background: linear-gradient(180deg, rgba(53, 111, 196, 0.08), #ffffff 62%);
 }
 
-.lens-card[data-lens="gamechanger"] {
+.lens-card[data-lens="game-changer"] {
   background: linear-gradient(180deg, rgba(239, 100, 8, 0.08), #ffffff 62%);
 }
 
-.lens-card[data-lens="system"] {
+.lens-card[data-lens="whole-system"] {
   background: linear-gradient(180deg, rgba(121, 137, 168, 0.08), #ffffff 62%);
+}
+
+.lens-card[data-lens="growth-role-model"] {
+  background: linear-gradient(180deg, rgba(217, 15, 47, 0.07), #ffffff 62%);
+}
+
+.lens-card[data-lens="cultural-ambassador"] {
+  background: linear-gradient(180deg, rgba(150, 87, 28, 0.08), #ffffff 62%);
+}
+
+.lens-card[data-lens="psychological-safety"] {
+  background: linear-gradient(180deg, rgba(115, 166, 207, 0.12), #ffffff 62%);
+}
+
+.lens-card[data-lens="empathy-intent"] {
+  background: linear-gradient(180deg, rgba(13, 141, 114, 0.08), #ffffff 62%);
 }
 
 .tool-card {
@@ -875,24 +983,44 @@ h3 {
   font-weight: 600;
 }
 
-.tool-card[data-lens="align"] .tool-time {
+.tool-card[data-lens="align-why-what"] .tool-time {
   background: rgba(229, 177, 0, 0.16);
   color: #7a5f00;
 }
 
-.tool-card[data-lens="situational"] .tool-time {
+.tool-card[data-lens="situational-leader"] .tool-time {
   background: rgba(53, 111, 196, 0.14);
   color: #234f93;
 }
 
-.tool-card[data-lens="gamechanger"] .tool-time {
+.tool-card[data-lens="game-changer"] .tool-time {
   background: rgba(239, 100, 8, 0.14);
   color: #b44d08;
 }
 
-.tool-card[data-lens="system"] .tool-time {
+.tool-card[data-lens="whole-system"] .tool-time {
   background: rgba(121, 137, 168, 0.16);
   color: #50617d;
+}
+
+.tool-card[data-lens="growth-role-model"] .tool-time {
+  background: rgba(217, 15, 47, 0.11);
+  color: #9b1831;
+}
+
+.tool-card[data-lens="cultural-ambassador"] .tool-time {
+  background: rgba(150, 87, 28, 0.12);
+  color: #744113;
+}
+
+.tool-card[data-lens="psychological-safety"] .tool-time {
+  background: rgba(115, 166, 207, 0.22);
+  color: #235275;
+}
+
+.tool-card[data-lens="empathy-intent"] .tool-time {
+  background: rgba(13, 141, 114, 0.13);
+  color: #0b6f5a;
 }
 
 .tool-summary {
@@ -953,24 +1081,44 @@ h3 {
   width: 100%;
 }
 
-.tool-card[data-lens="align"] .card-button {
+.tool-card[data-lens="align-why-what"] .card-button {
   border-color: rgba(229, 177, 0, 0.45);
   background: rgba(229, 177, 0, 0.08);
 }
 
-.tool-card[data-lens="situational"] .card-button {
+.tool-card[data-lens="situational-leader"] .card-button {
   border-color: rgba(53, 111, 196, 0.4);
   background: rgba(53, 111, 196, 0.07);
 }
 
-.tool-card[data-lens="gamechanger"] .card-button {
+.tool-card[data-lens="game-changer"] .card-button {
   border-color: rgba(239, 100, 8, 0.45);
   background: rgba(239, 100, 8, 0.07);
 }
 
-.tool-card[data-lens="system"] .card-button {
+.tool-card[data-lens="whole-system"] .card-button {
   border-color: rgba(121, 137, 168, 0.45);
   background: rgba(121, 137, 168, 0.08);
+}
+
+.tool-card[data-lens="growth-role-model"] .card-button {
+  border-color: rgba(217, 15, 47, 0.32);
+  background: rgba(217, 15, 47, 0.06);
+}
+
+.tool-card[data-lens="cultural-ambassador"] .card-button {
+  border-color: rgba(150, 87, 28, 0.38);
+  background: rgba(150, 87, 28, 0.07);
+}
+
+.tool-card[data-lens="psychological-safety"] .card-button {
+  border-color: rgba(115, 166, 207, 0.45);
+  background: rgba(115, 166, 207, 0.1);
+}
+
+.tool-card[data-lens="empathy-intent"] .card-button {
+  border-color: rgba(13, 141, 114, 0.36);
+  background: rgba(13, 141, 114, 0.07);
 }
 
 .lens-grid {

@@ -2,6 +2,7 @@ import json
 import re
 import subprocess
 import unittest
+from urllib.parse import parse_qs, unquote, urlparse
 from pathlib import Path
 from xml.etree import ElementTree as ET
 from zipfile import ZipFile
@@ -11,6 +12,7 @@ ROOT = Path(__file__).resolve().parents[1]
 APP_JS = ROOT / "app.js"
 INDEX_HTML = ROOT / "index.html"
 STYLES_CSS = ROOT / "styles.css"
+FAVICON_SVG = ROOT / "favicon.svg"
 SOURCE_XLSX = ROOT / "Soure info" / "Servant leadership manifesto Summarize_Final.xlsx"
 
 
@@ -44,6 +46,16 @@ class StaticAppRegressionTests(unittest.TestCase):
 
         self.assertRegex(self.index, r'<script src="./app\.js\?v=2026-04-24-1"></script>')
         self.assertIn(".manifesto-hotspot", self.styles)
+
+    def test_favicon_uses_manifesto_shape_without_text(self):
+        favicon = FAVICON_SVG.read_text(encoding="utf-8")
+
+        self.assertIn('href="./favicon.svg"', self.index)
+        self.assertIn("#e5b100", favicon)
+        self.assertIn("#ef6408", favicon)
+        self.assertIn("#d90f2f", favicon)
+        self.assertIn("#356fc4", favicon)
+        self.assertNotRegex(favicon, r"<text\b")
 
     def test_manifesto_text_is_verbatim_from_excel_final_sheet(self):
         source_rows = self._read_final_sheet_rows()
@@ -128,6 +140,101 @@ class StaticAppRegressionTests(unittest.TestCase):
         self.assertIsNotNone(inclusion_block)
         self.assertIn("tool.sourceUrl || getScaniaSourceFileUrl(tool.sourceFile)", body)
         self.assertIn("d=w09d99542179a489ab920036056f04601", inclusion_block.group(0))
+
+    def test_all_manifesto_attitudes_are_filter_lenses(self):
+        lens_ids = set(
+            re.findall(
+                r'\{\n    id: "([^"]+)",\n    name: "[\s\S]*?\n  \}',
+                self.app[self.app.index("const lenses") : self.app.index("const manifestoPrinciples")],
+            )
+        )
+        principle_blocks = re.findall(
+            r'\{\n    id: "([^"]+)",\n    principle: "[\s\S]*?lensId: "([^"]+)"',
+            self.app[self.app.index("const manifestoPrinciples") : self.app.index("const manifestoHotspots")],
+        )
+
+        self.assertEqual(len(lens_ids), 8)
+        self.assertEqual({principle_id for principle_id, _ in principle_blocks}, lens_ids)
+        self.assertEqual([(principle_id, principle_id) for principle_id, _ in principle_blocks], principle_blocks)
+
+    def test_source_file_tools_are_tagged_from_attitude_in_filename(self):
+        expected_by_attitude = {
+            "I Align direction via WHY & WHAT": "align-why-what",
+            "I am a situational Leader": "situational-leader",
+            "I am a situational leader": "situational-leader",
+            "I am a game changer": "game-changer",
+            "I am a gamechanger": "game-changer",
+            "I Think and Act for the whole": "whole-system",
+            "I am a role model for growth": "growth-role-model",
+            "I am a Role Model for Growth": "growth-role-model",
+            "I am a Cultural Ambassador": "cultural-ambassador",
+            "I Cultivate Psychological Safety": "psychological-safety",
+            "I Lead With Empathy and Intent": "empathy-intent",
+            "I Lead with Empathy and Intent": "empathy-intent",
+        }
+        blocks = re.findall(r'\{\n    id: "[^"]+",\n    title: "[\s\S]*?\n  \}', self.app)
+        mismatches = []
+
+        for block in blocks:
+            source_file = re.search(r'sourceFile:\s*(?:\n\s*)?"([^"]+)"', block)
+            if not source_file:
+                continue
+
+            attitude = re.search(r'\((I [^)]+)\)', source_file.group(1))
+            self.assertIsNotNone(attitude, source_file.group(1))
+            lens = self._read_js_string(block, "lensId")
+            expected = expected_by_attitude[attitude.group(1)]
+            if lens != expected:
+                mismatches.append((self._read_js_string(block, "title"), lens, expected))
+
+        self.assertEqual(mismatches, [])
+
+    def test_scania_source_links_are_tagged_from_attitude_in_filename(self):
+        expected_by_attitude = {
+            "align direction via WHY & WHAT": "align-why-what",
+            "Align direction via WHY & WHAT": "align-why-what",
+            "am a situational Leader": "situational-leader",
+            "am a situational leader": "situational-leader",
+            "am a game changer": "game-changer",
+            "am a gamechanger": "game-changer",
+            "am a gamachanger": "game-changer",
+            "Think and Act for the whole": "whole-system",
+        }
+        blocks = re.findall(r'\{\n    id: "[^"]+",\n    title: "[\s\S]*?\n  \}', self.app)
+        mismatches = []
+
+        for block in blocks:
+            if 'sourceId: "scania"' not in block or "sourceFile:" in block:
+                continue
+
+            source_url = re.search(r'sourceUrl:\s*(?:\n\s*)?"([^"]+)"', block)
+            if not source_url:
+                continue
+
+            file_values = parse_qs(urlparse(source_url.group(1)).query).get("file", [])
+            self.assertTrue(file_values, self._read_js_string(block, "title"))
+            source_name = unquote(file_values[0])
+            attitude = re.search(r'\(I ([^)]+)\)', source_name)
+            self.assertIsNotNone(attitude, source_name)
+            lens = self._read_js_string(block, "lensId")
+            expected = expected_by_attitude[attitude.group(1)]
+            if lens != expected:
+                mismatches.append((self._read_js_string(block, "title"), lens, expected))
+
+        self.assertEqual(mismatches, [])
+
+    def test_css_styles_all_lenses(self):
+        lens_ids = set(
+            re.findall(
+                r'\{\n    id: "([^"]+)",\n    name: "[\s\S]*?\n  \}',
+                self.app[self.app.index("const lenses") : self.app.index("const manifestoPrinciples")],
+            )
+        )
+
+        for lens_id in lens_ids:
+            self.assertIn(f'.filter-chip[data-lens="{lens_id}"]', self.styles)
+            self.assertIn(f'.tool-card[data-lens="{lens_id}"]', self.styles)
+            self.assertIn(f'.lens-card[data-lens="{lens_id}"]', self.styles)
 
     def _function_body(self, name):
         start = self.app.index(f"function {name}(")

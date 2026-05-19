@@ -31,32 +31,60 @@ function getScaniaSourceFileUrl(sourceFile) {
 
 const lenses = [
   {
-    id: "align",
-    name: "Align Direction",
-    shortName: "Align direction",
+    id: "align-why-what",
+    name: "I Align direction via WHY & WHAT",
+    shortName: "Align WHY & WHAT",
     description:
       "Clarify purpose, outcomes, boundaries, and shared agreements so people can move with more autonomy and less confusion.",
   },
   {
-    id: "situational",
-    name: "Situational Leadership",
+    id: "situational-leader",
+    name: "I am a Situational Leader",
     shortName: "Situational leader",
     description:
       "Adapt the support, coaching, and leadership response to what the person or team actually needs right now.",
   },
   {
-    id: "gamechanger",
-    name: "Gamechanger Practices",
-    shortName: "Gamechanger",
+    id: "game-changer",
+    name: "I am a Game Changer",
+    shortName: "Game changer",
     description:
       "Create movement with experimentation, fresh perspectives, distributed change leadership, and participative exercises.",
   },
   {
-    id: "system",
-    name: "Whole-System View",
+    id: "whole-system",
+    name: "I Think and Act for the whole",
     shortName: "Think and act for the whole",
     description:
       "Look across the wider system to improve flow, reduce friction, and surface what is holding back progress.",
+  },
+  {
+    id: "growth-role-model",
+    name: "I am a Role Model for Growth",
+    shortName: "Role model for growth",
+    description:
+      "Make learning, feedback, reflection, and unlearning visible so growth becomes part of everyday work.",
+  },
+  {
+    id: "cultural-ambassador",
+    name: "I am a Cultural Ambassador",
+    shortName: "Cultural ambassador",
+    description:
+      "Build bridges across cultures and teams so inclusion, respect, and belonging become visible behaviors.",
+  },
+  {
+    id: "psychological-safety",
+    name: "I Cultivate Psychological Safety",
+    shortName: "Psychological safety",
+    description:
+      "Create conditions where people can speak openly, surface risks, and learn without fear.",
+  },
+  {
+    id: "empathy-intent",
+    name: "I Lead with Empathy and Intent",
+    shortName: "Empathy and intent",
+    description:
+      "Lead through listening, transparent intent, and care so communication creates trust and clarity.",
   },
 ];
 
@@ -65,7 +93,7 @@ const manifestoPrinciples = [
     id: "align-why-what",
     principle: "Own Today, Shape Tomorrow",
     attitude: "I Align direction via WHY & WHAT",
-    lensId: "align",
+    lensId: "align-why-what",
     description:
       "I clarify the purpose and direction. I empower and trust the team members to lead the HOW with aligned autonomy \n",
     behavioursText:
@@ -80,7 +108,7 @@ const manifestoPrinciples = [
     id: "situational-leader",
     principle: "Own Today, Shape Tomorrow",
     attitude: "I am a Situational Leader",
-    lensId: "situational",
+    lensId: "situational-leader",
     description:
       "I adapt my leadership to the situation, context, and people involved so that I enable the best possible outcome ",
     behavioursText:
@@ -95,7 +123,7 @@ const manifestoPrinciples = [
     id: "game-changer",
     principle: "Dare to Try, Manage the Risk",
     attitude: "I am a Game Changer",
-    lensId: "gamechanger",
+    lensId: "game-changer",
     description:
       "I challenge how things have always been done. I raise my and my teams opinion and drive change to create value for our customer. I treat change as a source of growth and inspiration.\n",
     behavioursText:
@@ -116,7 +144,7 @@ const manifestoPrinciples = [
     id: "whole-system",
     principle: "Dare to Try, Manage the Risk",
     attitude: "I Think and Act for the whole ",
-    lensId: "system",
+    lensId: "whole-system",
     description:
       "I Lead to create a system with great value flow. I create clarity and alignment so value moves with purpose from idea to impact. I recognize and handle bottlenecks early to optimize the flow.",
     behavioursText:
@@ -131,7 +159,7 @@ const manifestoPrinciples = [
     id: "growth-role-model",
     principle: "Dare to Try, Manage the Risk",
     attitude: "I am a Role Model for Growth",
-    lensId: "situational",
+    lensId: "growth-role-model",
     description:
       "I am curious about learning new things - or unlearn old — and I am transparent about my progress even when I fail.\n",
     behavioursText:
@@ -154,7 +182,7 @@ const manifestoPrinciples = [
     id: "cultural-ambassador",
     principle: "Start with trust, Build together",
     attitude: "I am a Cultural Ambassador",
-    lensId: "gamechanger",
+    lensId: "cultural-ambassador",
     description:
       "I am curious about other cultures and build connections that foster respect, empowerment, and inclusion \n",
     behavioursText:
@@ -176,7 +204,7 @@ const manifestoPrinciples = [
     id: "psychological-safety",
     principle: "Start with trust, Build together",
     attitude: "I Cultivate Psychological Safety",
-    lensId: "situational",
+    lensId: "psychological-safety",
     description:
       "I create a safe place for teams to speak openly, to take risks, and to grow.",
     behavioursText:
@@ -198,7 +226,7 @@ const manifestoPrinciples = [
     id: "empathy-intent",
     principle: "Start with trust, Build together",
     attitude: "I Lead with Empathy and Intent",
-    lensId: "situational",
+    lensId: "empathy-intent",
     description:
       "I lead with understanding — and act with clarity, transparency and care.",
     behavioursText:
@@ -267,7 +295,7 @@ const scenarios = [
     title: "Direction is fuzzy",
     description:
       "Clarify purpose and desired outcomes before people drift into different interpretations.",
-    lensId: "align",
+    lensId: "align-why-what",
     sourceId: null,
     recommendedToolIds: ["why-what-how", "intent-briefs", "outcome-framing"],
     searchTerms: "direction alignment purpose outcomes",
@@ -276,7 +304,7 @@ const scenarios = [
     title: "Autonomy feels off",
     description:
       "Calibrate support, expectations, and help requests when people feel blocked or micromanaged.",
-    lensId: "situational",
+    lensId: "situational-leader",
     sourceId: null,
     recommendedToolIds: ["support-autonomy", "delegation-board", "ls-winfy"],
     searchTerms: "autonomy support ownership delegation help",
@@ -285,7 +313,7 @@ const scenarios = [
     title: "The team feels stuck",
     description:
       "Use reflection, peer help, and fresh structure to unlock what the team cannot see on its own.",
-    lensId: "situational",
+    lensId: "situational-leader",
     sourceId: null,
     recommendedToolIds: ["team-maturity-radar", "ls-troika-consulting", "retros-prompts"],
     searchTerms: "stuck team reflection peer help retro",
@@ -294,7 +322,7 @@ const scenarios = [
     title: "Need participation fast",
     description:
       "Get everyone contributing quickly instead of waiting for a few loud voices to lead.",
-    lensId: "gamechanger",
+    lensId: "game-changer",
     sourceId: "liberating-structures",
     recommendedToolIds: ["ls-1-2-4-all", "ls-15-solutions", "ls-winfy"],
     searchTerms: "participation inclusion fast ideas exercise",
@@ -303,7 +331,7 @@ const scenarios = [
     title: "Need to break habits",
     description:
       "Surface behaviors, routines, or portfolio traps that keep the work stuck where it is.",
-    lensId: "system",
+    lensId: "whole-system",
     sourceId: null,
     recommendedToolIds: ["ls-triz", "ls-ecocycle-planning", "experiment-canvas"],
     searchTerms: "habits stop doing obstacles portfolio change",
@@ -312,7 +340,7 @@ const scenarios = [
     title: "Change needs momentum",
     description:
       "Build traction through local action, storytelling, and practical exercises that lower the barrier to movement.",
-    lensId: "gamechanger",
+    lensId: "game-changer",
     sourceId: null,
     recommendedToolIds: ["change-champion-circles", "storytelling", "ls-15-solutions"],
     searchTerms: "change momentum local action adoption",
@@ -321,7 +349,7 @@ const scenarios = [
     title: "Flow is too slow",
     description:
       "Look across handoffs, bottlenecks, and activity portfolios instead of optimizing one slice at a time.",
-    lensId: "system",
+    lensId: "whole-system",
     sourceId: null,
     recommendedToolIds: ["value-stream-mapping", "ls-ecocycle-planning", "stakeholder-management"],
     searchTerms: "flow bottlenecks handoffs system portfolio",
@@ -382,7 +410,7 @@ const tools = [
     id: "why-what-how",
     title: "Why, What, How Canvas",
     sourceId: "scania",
-    lensId: "align",
+    lensId: "align-why-what",
     time: "60-120 min",
     summary:
       "Create shared direction without over-specifying the solution path.",
@@ -424,7 +452,7 @@ const tools = [
     id: "intent-briefs",
     title: "Intent Briefs",
     sourceId: "scania",
-    lensId: "align",
+    lensId: "align-why-what",
     time: "45-90 min",
     summary:
       "Replace detailed instructions with a short, clear statement of intent, constraints, and ownership.",
@@ -467,7 +495,7 @@ const tools = [
     id: "delegation-board",
     title: "Delegation Board",
     sourceId: "scania",
-    lensId: "align",
+    lensId: "align-why-what",
     time: "60-120 min",
     summary:
       "Make ownership and decision-making visible instead of assumed.",
@@ -510,7 +538,7 @@ const tools = [
     id: "outcome-framing",
     title: "Outcome Framing",
     sourceId: "scania",
-    lensId: "align",
+    lensId: "align-why-what",
     time: "45-90 min",
     summary:
       "Shift the conversation from activity and output to the impact the work should create.",
@@ -552,7 +580,7 @@ const tools = [
     id: "support-autonomy",
     title: "Support vs Autonomy Check-ins",
     sourceId: "scania",
-    lensId: "situational",
+    lensId: "situational-leader",
     time: "15-45 min",
     summary:
       "Continuously calibrate whether people need more guidance, more coaching, or more space.",
@@ -594,7 +622,7 @@ const tools = [
     id: "team-maturity-radar",
     title: "Team Maturity Radar",
     sourceId: "scania",
-    lensId: "situational",
+    lensId: "situational-leader",
     time: "60-120 min",
     summary:
       "Make team health visible so people can discuss maturity, gaps, and growth areas with shared language.",
@@ -637,7 +665,7 @@ const tools = [
     id: "situational-matrix",
     title: "Situational Leadership Matrix",
     sourceId: "scania",
-    lensId: "situational",
+    lensId: "situational-leader",
     time: "45-90 min",
     summary:
       "Adapt leadership response to the competence and commitment needed in a specific situation.",
@@ -680,7 +708,7 @@ const tools = [
     id: "change-champion-circles",
     title: "Change Champion Circles",
     sourceId: "scania",
-    lensId: "gamechanger",
+    lensId: "game-changer",
     time: "60-90 min setup",
     summary:
       "Build a distributed network that helps change move through relationships, local action, and feedback loops.",
@@ -722,7 +750,7 @@ const tools = [
     id: "experiment-canvas",
     title: "Experiment Canvas",
     sourceId: "scania",
-    lensId: "gamechanger",
+    lensId: "game-changer",
     time: "45-75 min",
     summary:
       "Turn debate into learning by framing small, testable experiments around a clear hypothesis.",
@@ -764,7 +792,7 @@ const tools = [
     id: "stakeholder-management",
     title: "Stakeholder Management",
     sourceId: "scania",
-    lensId: "gamechanger",
+    lensId: "game-changer",
     time: "45-90 min",
     summary:
       "Shift stakeholder work from expectation management to relationship building and mutual value creation.",
@@ -807,7 +835,7 @@ const tools = [
     id: "retros-prompts",
     title: "Break-the-Routine Retros",
     sourceId: "scania",
-    lensId: "gamechanger",
+    lensId: "game-changer",
     time: "45-75 min",
     summary:
       "Use creative prompts to break repetitive retrospective patterns and reveal new insights.",
@@ -849,7 +877,7 @@ const tools = [
     id: "storytelling",
     title: "Storytelling",
     sourceId: "scania",
-    lensId: "gamechanger",
+    lensId: "game-changer",
     time: "30-60 min",
     summary:
       "Turn information into meaning by connecting work to purpose, tension, action, outcome, and learning.",
@@ -891,7 +919,7 @@ const tools = [
     id: "value-stream-mapping",
     title: "Value Stream Mapping",
     sourceId: "scania",
-    lensId: "system",
+    lensId: "whole-system",
     time: "90-150 min",
     summary:
       "Make the end-to-end flow of value visible so delays, handoffs, and systemic waste can be improved together.",
@@ -933,7 +961,7 @@ const tools = [
     id: "one-two-four-all",
     title: "1-2-4-All",
     sourceId: "liberating-structures",
-    lensId: "gamechanger",
+    lensId: "game-changer",
     time: "12 min",
     summary:
       "Engage everyone simultaneously in generating questions, ideas, and suggestions.",
@@ -976,7 +1004,7 @@ const tools = [
     id: "triz",
     title: "Creative Destruction (TRIZ)",
     sourceId: "liberating-structures",
-    lensId: "system",
+    lensId: "whole-system",
     time: "35 min",
     summary:
       "Stop counterproductive activities and behaviors to make space for innovation.",
@@ -1019,7 +1047,7 @@ const tools = [
     id: "troika-consulting",
     title: "Troika Consulting",
     sourceId: "liberating-structures",
-    lensId: "situational",
+    lensId: "empathy-intent",
     time: "30 min",
     summary:
       "Get immediate practical and imaginative help from colleagues.",
@@ -1062,7 +1090,7 @@ const tools = [
     id: "fifteen-percent-solutions",
     title: "15% Solutions",
     sourceId: "liberating-structures",
-    lensId: "gamechanger",
+    lensId: "game-changer",
     time: "10-20 min",
     summary:
       "Discover and focus on what each person can do now with the resources and authority they already have.",
@@ -1105,7 +1133,7 @@ const tools = [
     id: "ecocycle-planning",
     title: "Ecocycle Planning",
     sourceId: "liberating-structures",
-    lensId: "system",
+    lensId: "whole-system",
     time: "95 min",
     summary:
       "Analyze the full portfolio of activities and relationships to identify obstacles and opportunities for progress.",
@@ -1148,7 +1176,7 @@ const tools = [
     id: "winfy",
     title: "What I Need From You (WINFY)",
     sourceId: "liberating-structures",
-    lensId: "align",
+    lensId: "align-why-what",
     time: "55-70 min",
     summary:
       "Surface essential needs across functions and accept or reject requests for support.",
@@ -1191,7 +1219,7 @@ const tools = [
     id: "red-flag-round",
     title: "Red Flag Round in Dailies",
     sourceId: "scania",
-    lensId: "situational",
+    lensId: "psychological-safety",
     time: "2-5 min",
     summary:
       "Create a short, safe daily habit for raising concerns, risks, blockers, or tensions before they grow.",
@@ -1233,7 +1261,7 @@ const tools = [
     id: "empathy-interviews",
     title: "Empathy Interviews",
     sourceId: "scania",
-    lensId: "situational",
+    lensId: "empathy-intent",
     time: "30-60 min",
     summary:
       "Build deeper understanding of another person's experiences, needs, emotions, and perspectives through active listening.",
@@ -1274,7 +1302,7 @@ const tools = [
     id: "feedback-canvas",
     title: "Feedback Canvas",
     sourceId: "scania",
-    lensId: "situational",
+    lensId: "growth-role-model",
     time: "60-90 min",
     summary:
       "Make feedback clear, safe, and actionable by moving from vague opinions into structured growth dialogue.",
@@ -1315,7 +1343,7 @@ const tools = [
     id: "inclusion-nudges",
     title: "Inclusion Nudges",
     sourceId: "scania",
-    lensId: "gamechanger",
+    lensId: "cultural-ambassador",
     time: "15-45 min",
     summary:
       "Make inclusive behavior easier in everyday work through small prompts, reminders, and design choices.",
@@ -1358,7 +1386,7 @@ const tools = [
     id: "intent-clarity-framework",
     title: "Intent Clarity Framework",
     sourceId: "scania",
-    lensId: "situational",
+    lensId: "empathy-intent",
     time: "20-45 min",
     summary:
       "Make intentions explicit before speaking, giving feedback, asking questions, or making decisions.",
@@ -1394,13 +1422,13 @@ const tools = [
     quote: "My intent is to raise a concern early so we can solve it together.",
     sourceLabel: "Open source file",
     sourceFile:
-      "Tools and practisies/Intent Clarity Framework (My Intent Is...) -  (I Lead With Empathy and Intent).docx",
+      "Tools and practisies/Intent Clarity Framework (My Intent Is...) -  (I Lead With Empathy and Intent).docx",
   },
   {
     id: "ladder-of-inference",
     title: "Ladder of Inference",
     sourceId: "scania",
-    lensId: "situational",
+    lensId: "empathy-intent",
     time: "30-60 min",
     summary:
       "Slow down assumptions, interpretations, and conclusions so teams can inquire before reacting.",
@@ -1441,7 +1469,7 @@ const tools = [
     id: "learning-logs",
     title: "Learning Logs",
     sourceId: "scania",
-    lensId: "situational",
+    lensId: "growth-role-model",
     time: "10-30 min",
     summary:
       "Turn everyday experiences, successes, failures, and experiments into visible learning for individuals and teams.",
@@ -1482,7 +1510,7 @@ const tools = [
     id: "psychological-safety-pulse",
     title: "Psychological Safety Pulse Survey",
     sourceId: "scania",
-    lensId: "situational",
+    lensId: "psychological-safety",
     time: "15-45 min",
     summary:
       "Help teams understand how safe people feel to speak up, share ideas, ask questions, and take interpersonal risks.",
@@ -1524,7 +1552,7 @@ const tools = [
     id: "retro",
     title: "Retrospectives (Retro)",
     sourceId: "scania",
-    lensId: "situational",
+    lensId: "growth-role-model",
     time: "45-90 min",
     summary:
       "Create a structured space for teams to pause, reflect, learn together, and turn experience into action.",
@@ -1565,7 +1593,7 @@ const tools = [
     id: "retros-culture-lens",
     title: "Retros with Culture Lens",
     sourceId: "scania",
-    lensId: "gamechanger",
+    lensId: "cultural-ambassador",
     time: "45-90 min",
     summary:
       "Add a culture-focused layer to an existing retrospective to reflect on inclusion, trust, and collaboration behaviors.",
@@ -1606,7 +1634,7 @@ const tools = [
     id: "retros-what-i-didnt-say",
     title: "Retros with What I Didn't Say Rounds",
     sourceId: "scania",
-    lensId: "situational",
+    lensId: "psychological-safety",
     time: "5-20 min",
     summary:
       "Create intentional space for unspoken thoughts, concerns, ideas, or perspectives at the end of a reflection.",
@@ -1648,7 +1676,7 @@ const tools = [
     id: "team-agreements",
     title: "Team Agreements",
     sourceId: "scania",
-    lensId: "gamechanger",
+    lensId: "cultural-ambassador",
     time: "45-90 min",
     summary:
       "Make expectations explicit and shared by co-creating the behaviors the team wants to live by.",
@@ -1689,7 +1717,7 @@ const tools = [
     id: "unlearning-team-wall",
     title: "What I'm Unlearning Team Wall",
     sourceId: "scania",
-    lensId: "situational",
+    lensId: "growth-role-model",
     time: "20-60 min",
     summary:
       "Make it safe and visible to let go of outdated habits, beliefs, or ways of working that no longer serve the team.",
@@ -1731,7 +1759,7 @@ const tools = [
     id: "x-y-leadership",
     title: "Theory X and Theory Y Leadership",
     sourceId: "scania",
-    lensId: "situational",
+    lensId: "empathy-intent",
     time: "30-60 min",
     summary:
       "Reflect on assumptions about people, motivation, responsibility, and work so leadership choices become more intentional.",
@@ -1827,18 +1855,22 @@ function formatDelivery(structure) {
 
 function mapLsLens(structure) {
   if (structure.themes.includes("Plan")) {
-    return "align";
+    return "align-why-what";
   }
 
   if (structure.themes.includes("Help")) {
-    return "situational";
+    return "empathy-intent";
   }
 
   if (structure.themes.includes("Analyze") || structure.themes.includes("Strategize")) {
-    return "system";
+    return "whole-system";
   }
 
-  return "gamechanger";
+  if (structure.themes.includes("Share")) {
+    return "cultural-ambassador";
+  }
+
+  return "game-changer";
 }
 
 function getCatalogItems() {
