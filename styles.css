@@ -358,7 +358,7 @@ h3 {
 
 .filter-groups {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 0.9rem;
   margin-top: 1rem;
 }
@@ -379,20 +379,36 @@ h3 {
   width: 6px;
 }
 
-.filter-group:first-child {
+.filter-group-collection {
   background: linear-gradient(180deg, rgba(13, 141, 114, 0.08), rgba(255, 255, 255, 0.96));
 }
 
-.filter-group:first-child::before {
+.filter-group-collection::before {
   background: linear-gradient(180deg, var(--manifesto-green), var(--manifesto-sky));
 }
 
-.filter-group:last-child {
+.filter-group-lens {
   background: linear-gradient(180deg, rgba(53, 111, 196, 0.08), rgba(255, 255, 255, 0.96));
 }
 
-.filter-group:last-child::before {
+.filter-group-lens::before {
   background: linear-gradient(180deg, var(--manifesto-blue), var(--manifesto-slate));
+}
+
+.filter-group-time {
+  background: linear-gradient(180deg, rgba(229, 177, 0, 0.1), rgba(255, 255, 255, 0.96));
+}
+
+.filter-group-time::before {
+  background: linear-gradient(180deg, var(--manifesto-gold), var(--manifesto-orange));
+}
+
+.filter-group-preparation {
+  background: linear-gradient(180deg, rgba(217, 15, 47, 0.06), rgba(255, 255, 255, 0.96));
+}
+
+.filter-group-preparation::before {
+  background: linear-gradient(180deg, var(--manifesto-red), var(--manifesto-beige));
 }
 
 .filter-strip {

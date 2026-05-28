@@ -38,6 +38,8 @@ class StaticAppRegressionTests(unittest.TestCase):
             'id="manifestoHotspots"',
             'id="sourceFilters"',
             'id="lensFilters"',
+            'id="timeFilters"',
+            'id="prepFilters"',
             'id="scenarioGrid"',
             'id="toolGrid"',
             'id="detailDrawer"',
@@ -138,6 +140,41 @@ class StaticAppRegressionTests(unittest.TestCase):
         self.assertIn("const searchTokens = normalizedSearch.split", body)
         self.assertIn("searchTokens.every", body)
         self.assertNotIn(".includes(normalizedSearch)", body)
+
+    def test_time_filter_parses_ranges_and_limits_by_available_minutes(self):
+        self.assertIn("const timeFilters", self.app)
+        self.assertIn("const timeOptions", self.app)
+
+        body = self._function_body("getFilteredTools")
+        parser_body = self._function_body("getToolTimeMinutes")
+
+        self.assertIn("const timeMatch =", body)
+        self.assertIn("state.activeTimeId", body)
+        self.assertIn("getToolTimeMinutes(tool.time)", body)
+        self.assertIn(
+            "return lensMatch && sourceMatch && scenarioMatch && timeMatch && preparationMatch && searchMatch;",
+            body,
+        )
+        self.assertIn("normalizedTime.matchAll", parser_body)
+        self.assertIn("day", parser_body)
+
+    def test_preparation_filter_uses_pills_and_catalog_classification(self):
+        self.assertIn("const prepFilters", self.app)
+        self.assertIn("const preparationOptions", self.app)
+        self.assertIn("const preparationHeavyToolIds", self.app)
+
+        body = self._function_body("getFilteredTools")
+        classifier_body = self._function_body("getToolPreparationLevel")
+
+        self.assertIn("const preparationMatch =", body)
+        self.assertIn("state.activePreparationId", body)
+        self.assertIn("getToolPreparationLevel(tool)", body)
+        self.assertIn(
+            "return lensMatch && sourceMatch && scenarioMatch && timeMatch && preparationMatch && searchMatch;",
+            body,
+        )
+        self.assertIn("preparationHeavyToolIds.has(tool.id)", classifier_body)
+        self.assertIn("getToolTimeMinutes(tool.time)", classifier_body)
 
     def test_source_file_links_use_team_tiger_workmaterial_path(self):
         body = self._function_body("getScaniaSourceFileUrl")

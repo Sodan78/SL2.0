@@ -1,5 +1,6 @@
 import assert from "node:assert/strict";
 import { spawn } from "node:child_process";
+import { once } from "node:events";
 import { join, resolve } from "node:path";
 import { tmpdir } from "node:os";
 import { mkdtemp, rm } from "node:fs/promises";
@@ -46,6 +47,10 @@ test.after(async () => {
   }
   if (chrome && !chrome.killed) {
     chrome.kill();
+    await Promise.race([
+      once(chrome, "exit"),
+      delay(2_000),
+    ]);
   }
   if (userDataDir) {
     await rm(userDataDir, { force: true, recursive: true });
@@ -60,6 +65,8 @@ test("page loads core UI without browser errors", async () => {
     scenarioButtons: document.querySelectorAll(".scenario-chip").length,
     sourceFilters: document.querySelectorAll("#sourceFilters button").length,
     lensFilters: document.querySelectorAll("#lensFilters button").length,
+    timeFilters: document.querySelectorAll("#timeFilters button").length,
+    prepFilters: document.querySelectorAll("#prepFilters button").length,
     toolCards: document.querySelectorAll(".tool-card").length,
     resultCount: document.querySelector("#resultCount")?.textContent,
   }));
@@ -68,7 +75,9 @@ test("page loads core UI without browser errors", async () => {
   assert.equal(result.hotspots, 8);
   assert.equal(result.scenarioButtons, 7);
   assert.equal(result.sourceFilters, 3);
-  assert.equal(result.lensFilters, 5);
+  assert.equal(result.lensFilters, 9);
+  assert.equal(result.timeFilters, 5);
+  assert.equal(result.prepFilters, 3);
   assert.ok(result.toolCards > 20);
   assert.match(result.resultCount, /Showing the full catalog:/);
 });
@@ -134,7 +143,7 @@ test("situation button shows recommended result cards", async () => {
 test("lens and collection filters clear previous situation state", async () => {
   await navigate(appUrl);
   await clickScenario("Flow is too slow");
-  await click("#lensFilters button[data-lens='align']");
+  await click("#lensFilters button[data-lens='align-why-what']");
 
   const lensResult = await evaluate(() => ({
     count: document.querySelector("#resultCount")?.textContent,
@@ -170,6 +179,49 @@ test("search matches multiple words as tokens in the GUI", async () => {
   assert.match(result.count, /Showing \d+ of/);
   assert.ok(result.cards.includes("Value Stream Mapping"));
   assert.ok(result.cards.length >= 1);
+});
+
+test("time filter narrows tools to selected available minutes", async () => {
+  await navigate(appUrl);
+  await click("#timeFilters button[data-time='30']");
+
+  const result = await evaluate(() => ({
+    count: document.querySelector("#resultCount")?.textContent,
+    cards: [...document.querySelectorAll(".tool-card h3")].map((item) => item.textContent),
+    activeLabel: document.querySelector("#timeFilters button.active")?.textContent,
+  }));
+
+  assert.equal(result.activeLabel, "Up to 30 min");
+  assert.match(result.count, /Showing \d+ of/);
+  assert.ok(result.cards.includes("1-2-4-All"));
+  assert.ok(!result.cards.includes("Purpose-to-Practice (P2P)"));
+});
+
+test("preparation filter separates low-prep drills from prepared workshops", async () => {
+  await navigate(appUrl);
+  await click("#prepFilters button[data-preparation='low']");
+
+  const lowPrep = await evaluate(() => ({
+    count: document.querySelector("#resultCount")?.textContent,
+    cards: [...document.querySelectorAll(".tool-card h3")].map((item) => item.textContent),
+    activeLabel: document.querySelector("#prepFilters button.active")?.textContent,
+  }));
+
+  assert.equal(lowPrep.activeLabel, "Low prep");
+  assert.match(lowPrep.count, /Showing \d+ of/);
+  assert.ok(lowPrep.cards.includes("1-2-4-All"));
+  assert.ok(!lowPrep.cards.includes("Value Stream Mapping"));
+
+  await click("#prepFilters button[data-preparation='needs']");
+
+  const needsPrep = await evaluate(() => ({
+    cards: [...document.querySelectorAll(".tool-card h3")].map((item) => item.textContent),
+    activeLabel: document.querySelector("#prepFilters button.active")?.textContent,
+  }));
+
+  assert.equal(needsPrep.activeLabel, "Needs preparation");
+  assert.ok(needsPrep.cards.includes("Value Stream Mapping"));
+  assert.ok(!needsPrep.cards.includes("1-2-4-All"));
 });
 
 async function connectToChrome() {

@@ -11,6 +11,42 @@ const sources = [
   },
 ];
 
+const timeOptions = [
+  { id: null, label: "Any time" },
+  { id: "15", label: "Up to 15 min", maxMinutes: 15 },
+  { id: "30", label: "Up to 30 min", maxMinutes: 30 },
+  { id: "60", label: "Up to 60 min", maxMinutes: 60 },
+  { id: "over-60", label: "More than 60 min", minMinutes: 61 },
+];
+
+const preparationOptions = [
+  { id: null, label: "Any prep" },
+  { id: "low", label: "Low prep" },
+  { id: "needs", label: "Needs preparation" },
+];
+
+const preparationHeavyToolIds = new Set([
+  "why-what-how",
+  "intent-briefs",
+  "delegation-board",
+  "outcome-framing",
+  "team-maturity-radar",
+  "situational-matrix",
+  "change-champion-circles",
+  "experiment-canvas",
+  "stakeholder-management",
+  "value-stream-mapping",
+  "ls-ecocycle-planning",
+  "ls-p2p",
+  "ls-options-place",
+  "ls-panarchy",
+  "ls-critical-uncertainties",
+  "ls-simple-ethnography",
+  "ls-design-storyboards",
+  "ls-social-network-webbing",
+  "ls-strategy-knotworking",
+]);
+
 const googleAnalyticsId = "G-15SPXQJVZR";
 const analyticsConsentStorageKey = "sl20AnalyticsConsent";
 
@@ -1804,6 +1840,8 @@ const tools = [
 const state = {
   activeLensId: null,
   activeSourceId: null,
+  activeTimeId: null,
+  activePreparationId: null,
   searchTerm: "",
   scenarioToolIds: [],
 };
@@ -1811,6 +1849,8 @@ const state = {
 const scenarioGrid = document.querySelector("#scenarioGrid");
 const lensFilters = document.querySelector("#lensFilters");
 const sourceFilters = document.querySelector("#sourceFilters");
+const timeFilters = document.querySelector("#timeFilters");
+const prepFilters = document.querySelector("#prepFilters");
 const lensCards = document.querySelector("#lensCards");
 const manifestoHotspotLayer = document.querySelector("#manifestoHotspots");
 const toolGrid = document.querySelector("#toolGrid");
@@ -1837,6 +1877,52 @@ function lensName(lensId) {
 
 function sourceName(sourceId) {
   return sources.find((source) => source.id === sourceId)?.shortName ?? "";
+}
+
+function getToolTimeMinutes(timeText) {
+  const normalizedTime = String(timeText).toLowerCase();
+  const minuteValues = [...normalizedTime.matchAll(/(\d+)\s*(day|days|min|mins|minute|minutes)?/g)]
+    .map((match) => {
+      const amount = Number(match[1]);
+      const unit = match[2] ?? "min";
+      return unit.startsWith("day") ? amount * 24 * 60 : amount;
+    });
+
+  return minuteValues.length > 0 ? Math.max(...minuteValues) : null;
+}
+
+function getToolPreparationLevel(tool) {
+  if (preparationHeavyToolIds.has(tool.id)) {
+    return "needs";
+  }
+
+  const minutes = getToolTimeMinutes(tool.time);
+  const preparationText = [
+    tool.title,
+    tool.time,
+    tool.summary,
+    tool.signal,
+    ...(tool.goodFor ?? []),
+    ...(tool.searchIndex ?? []),
+  ]
+    .join(" ")
+    .toLowerCase();
+
+  const heavySignals = [
+    "setup",
+    "canvas",
+    "mapping",
+    "board",
+    "radar",
+    "stakeholder",
+    "portfolio",
+    "pre-reading",
+    "workshop",
+  ];
+
+  return minutes > 60 || heavySignals.some((signal) => preparationText.includes(signal))
+    ? "needs"
+    : "low";
 }
 
 function escapeHtml(value) {
@@ -2774,16 +2860,67 @@ function renderLensFilters() {
   });
 }
 
+function renderTimeFilters() {
+  timeFilters.innerHTML = "";
+
+  timeOptions.forEach((option) => {
+    const button = document.createElement("button");
+    button.className = `filter-chip${state.activeTimeId === option.id ? " active" : ""}`;
+    button.dataset.time = option.id ?? "all";
+    button.textContent = option.label;
+    button.addEventListener("click", () => {
+      state.activeTimeId = state.activeTimeId === option.id ? null : option.id;
+      trackUsage("time_filter", { time_id: state.activeTimeId || "all" });
+      renderTimeFilters();
+      renderTools();
+    });
+    timeFilters.appendChild(button);
+  });
+}
+
+function renderPreparationFilters() {
+  prepFilters.innerHTML = "";
+
+  preparationOptions.forEach((option) => {
+    const button = document.createElement("button");
+    button.className = `filter-chip${state.activePreparationId === option.id ? " active" : ""}`;
+    button.dataset.preparation = option.id ?? "all";
+    button.textContent = option.label;
+    button.addEventListener("click", () => {
+      state.activePreparationId = state.activePreparationId === option.id ? null : option.id;
+      trackUsage("preparation_filter", {
+        preparation_id: state.activePreparationId || "all",
+      });
+      renderPreparationFilters();
+      renderTools();
+    });
+    prepFilters.appendChild(button);
+  });
+}
+
 function getFilteredTools() {
   const normalizedSearch = state.searchTerm.trim().toLowerCase();
   const searchTokens = normalizedSearch.split(/\s+/).filter(Boolean);
   const catalogItems = getCatalogItems();
+  const activeTimeOption = state.activeTimeId
+    ? timeOptions.find((option) => option.id === state.activeTimeId)
+    : null;
 
   return catalogItems.filter((tool) => {
     const lensMatch = !state.activeLensId || tool.lensId === state.activeLensId;
     const sourceMatch = !state.activeSourceId || tool.sourceId === state.activeSourceId;
     const scenarioMatch =
       state.scenarioToolIds.length === 0 || state.scenarioToolIds.includes(tool.id);
+    const toolMinutes = getToolTimeMinutes(tool.time);
+    const timeMatch =
+      !activeTimeOption ||
+      toolMinutes === null ||
+      (activeTimeOption.maxMinutes
+        ? toolMinutes <= activeTimeOption.maxMinutes
+        : toolMinutes >= activeTimeOption.minMinutes);
+    const preparationMatch =
+      !state.activePreparationId ||
+      getToolPreparationLevel(tool) === state.activePreparationId;
 
     const searchIndex = [
       tool.title,
@@ -2804,7 +2941,7 @@ function getFilteredTools() {
       searchTokens.length === 0 ||
       searchTokens.every((token) => searchIndex.includes(token));
 
-    return lensMatch && sourceMatch && scenarioMatch && searchMatch;
+    return lensMatch && sourceMatch && scenarioMatch && timeMatch && preparationMatch && searchMatch;
   });
 }
 
@@ -3031,11 +3168,15 @@ searchInput.addEventListener("input", (event) => {
 clearFilters.addEventListener("click", () => {
   state.activeLensId = null;
   state.activeSourceId = null;
+  state.activeTimeId = null;
+  state.activePreparationId = null;
   state.searchTerm = "";
   state.scenarioToolIds = [];
   searchInput.value = "";
   renderSourceFilters();
   renderLensFilters();
+  renderTimeFilters();
+  renderPreparationFilters();
   renderTools();
 });
 
@@ -3051,6 +3192,8 @@ document.addEventListener("keydown", (event) => {
 openRecommended.addEventListener("click", () => {
   state.activeLensId = null;
   state.activeSourceId = null;
+  state.activeTimeId = null;
+  state.activePreparationId = null;
   state.scenarioToolIds = [
     "why-what-how",
     "support-autonomy",
@@ -3063,6 +3206,8 @@ openRecommended.addEventListener("click", () => {
   searchInput.value = "";
   renderSourceFilters();
   renderLensFilters();
+  renderTimeFilters();
+  renderPreparationFilters();
   renderTools();
   trackUsage("recommended_mix_open", { item_count: state.scenarioToolIds.length });
   document.querySelector("#toolbox").scrollIntoView({ behavior: "smooth" });
@@ -3074,4 +3219,6 @@ populateLenses();
 populateManifestoHotspots();
 renderSourceFilters();
 renderLensFilters();
+renderTimeFilters();
+renderPreparationFilters();
 renderTools();
