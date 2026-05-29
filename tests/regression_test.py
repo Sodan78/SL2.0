@@ -46,8 +46,14 @@ class StaticAppRegressionTests(unittest.TestCase):
         ]:
             self.assertIn(selector, self.index)
 
-        self.assertRegex(self.index, r'<script src="./app\.js\?v=2026-04-24-1"></script>')
+        self.assertRegex(self.index, r'<script src="./app\.js\?v=2026-05-29-1"></script>')
         self.assertIn(".manifesto-hotspot", self.styles)
+
+    def test_filter_asset_versions_are_cache_busted(self):
+        self.assertIn('id="timeFilters"', self.index)
+        self.assertIn('id="prepFilters"', self.index)
+        self.assertRegex(self.index, r'<link rel="stylesheet" href="./styles\.css\?v=2026-05-29-1" />')
+        self.assertRegex(self.index, r'<script src="./app\.js\?v=2026-05-29-1"></script>')
 
     def test_favicon_uses_manifesto_shape_without_text(self):
         favicon = FAVICON_SVG.read_text(encoding="utf-8")
