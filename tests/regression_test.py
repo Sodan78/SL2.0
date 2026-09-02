@@ -46,14 +46,14 @@ class StaticAppRegressionTests(unittest.TestCase):
         ]:
             self.assertIn(selector, self.index)
 
-        self.assertRegex(self.index, r'<script src="./app\.js\?v=2026-05-29-1"></script>')
+        self.assertRegex(self.index, r'<script src="./app\.js\?v=2026-09-02-1"></script>')
         self.assertIn(".manifesto-hotspot", self.styles)
 
     def test_filter_asset_versions_are_cache_busted(self):
         self.assertIn('id="timeFilters"', self.index)
         self.assertIn('id="prepFilters"', self.index)
         self.assertRegex(self.index, r'<link rel="stylesheet" href="./styles\.css\?v=2026-05-29-1" />')
-        self.assertRegex(self.index, r'<script src="./app\.js\?v=2026-05-29-1"></script>')
+        self.assertRegex(self.index, r'<script src="./app\.js\?v=2026-09-02-1"></script>')
 
     def test_favicon_uses_manifesto_shape_without_text(self):
         favicon = FAVICON_SVG.read_text(encoding="utf-8")
@@ -261,6 +261,9 @@ class StaticAppRegressionTests(unittest.TestCase):
             "am a gamechanger": "game-changer",
             "am a gamachanger": "game-changer",
             "Think and Act for the whole": "whole-system",
+            "lead with empathy and Intent": "empathy-intent",
+            "lead with empathy and intent": "empathy-intent",
+            "cultivate Psychological Safety": "psychological-safety",
         }
         blocks = re.findall(r'\{\n    id: "[^"]+",\n    title: "[\s\S]*?\n  \}', self.app)
         mismatches = []
@@ -284,6 +287,27 @@ class StaticAppRegressionTests(unittest.TestCase):
                 mismatches.append((self._read_js_string(block, "title"), lens, expected))
 
         self.assertEqual(mismatches, [])
+
+    def test_four_new_sharepoint_exercises_are_complete(self):
+        expected = {
+            "future-story-exercise": ("Future Story Exercise", "empathy-intent", "45 min", "F93E1B72-42C7-4D53-A209-C2AD922316AF"),
+            "office-reset-workshop": ("Office Reset Workshop", "psychological-safety", "60 min", "870ED113-5EA6-4D27-9E52-A4A086321F3A"),
+            "from-concern-to-influence": ("From Concern to Influence", "empathy-intent", "45-60 min", "E0487583-F33F-4DD6-9817-736F8EFB280A"),
+            "reality-hope-check-in": ("The Reality and Hope Check-In", "psychological-safety", "30-45 min", "E64A152D-12FA-4417-8166-BA5724DF77C3"),
+        }
+
+        for tool_id, (title, lens_id, time, source_doc) in expected.items():
+            block_match = re.search(rf'\{{\n    id: "{tool_id}",[\s\S]*?\n  \}}', self.app)
+            self.assertIsNotNone(block_match, tool_id)
+            block = block_match.group(0)
+            self.assertIn(f'title: "{title}"', block)
+            self.assertIn('sourceId: "scania"', block)
+            self.assertIn(f'lensId: "{lens_id}"', block)
+            self.assertIn(f'time: "{time}"', block)
+            self.assertIn("steps:", block)
+            self.assertIn("questions:", block)
+            self.assertIn("searchIndex:", block)
+            self.assertIn(source_doc, unquote(block))
 
     def test_css_styles_all_lenses(self):
         lens_ids = set(

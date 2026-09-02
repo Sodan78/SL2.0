@@ -181,6 +181,30 @@ test("search matches multiple words as tokens in the GUI", async () => {
   assert.ok(result.cards.length >= 1);
 });
 
+test("new SharePoint exercises are searchable and open in the detail drawer", async () => {
+  const cases = [
+    ["six months proud", "Future Story Exercise"],
+    ["office collaboration agreement", "Office Reset Workshop"],
+    ["frustration agency", "From Concern to Influence"],
+    ["hardest hope", "The Reality and Hope Check-In"],
+  ];
+
+  for (const [search, title] of cases) {
+    await navigate(appUrl);
+    await type("#searchInput", search);
+    const cards = await evaluate(() => [...document.querySelectorAll(".tool-card h3")].map((item) => item.textContent));
+    assert.ok(cards.includes(title), `${title} was not found for: ${search}`);
+
+    await click(".tool-card .card-button");
+    const drawer = await evaluate(() => ({
+      title: document.querySelector(".detail-title")?.textContent,
+      sourceUrl: document.querySelector(".detail-link-primary")?.href,
+    }));
+    assert.equal(drawer.title, title);
+    assert.match(drawer.sourceUrl, /scaniaazureservices\.sharepoint\.com/);
+  }
+});
+
 test("time filter narrows tools to selected available minutes", async () => {
   await navigate(appUrl);
   await click("#timeFilters button[data-time='30']");
